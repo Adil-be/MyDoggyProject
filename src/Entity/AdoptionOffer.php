@@ -31,6 +31,9 @@ class AdoptionOffer
     #[ORM\OneToMany(mappedBy: 'AdoptionOffer', targetEntity: Message::class)]
     private Collection $messages;
 
+    #[ORM\ManyToOne(inversedBy: 'AdoptionOffers')]
+    private ?Adoptant $adoptant = null;
+
     public function __construct()
     {
         $this->dogs = new ArrayCollection();
@@ -128,6 +131,18 @@ class AdoptionOffer
                 $message->setAdoptionOffer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdoptant(): ?Adoptant
+    {
+        return $this->adoptant;
+    }
+
+    public function setAdoptant(?Adoptant $adoptant): self
+    {
+        $this->adoptant = $adoptant;
 
         return $this;
     }
