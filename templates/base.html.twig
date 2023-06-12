@@ -2,15 +2,68 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>
+            {% block title %}Welcome!
+            {% endblock %}
+        </title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
+            <link rel="stylesheet" href="{{ asset("css/style.css") }}">
         {% endblock %}
 
         {% block javascripts %}
+            <script src="js/bootstrap.min.js"></script>
         {% endblock %}
     </head>
     <body>
+        {% block header %}
+            <header>
+                <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">
+                            <img src="{{asset("img/bulldog.png")}}" alt="Logo site PuggLife" width="30" height="24" class="d-inline-block align-text-top">
+                            PuggLife
+                        </a>
+
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Liste Annonce</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link disabled">Disabled</a>
+                                </li>
+                            </ul>
+                            {% if app.user %}
+                                <div class="d-flex gap-3">
+                                    {% if is_granted('ROLE_ADOPTEUR') %}
+                                        <a class="btn btn-outline-success" href="{{ path("app_adoptant") }}">{{app.user.getUsername}}</a>
+                                    {% endif %}
+                                    {% if  is_granted('ROLE_ANNONCEUR') %}
+                                        <a class="btn btn-outline-success" href="{{ path("app_annonceur") }}">{{app.user.getUsername}}</a>
+                                    {% endif %}
+                                    {% if  is_granted('ROLE_ADMIN') %}
+                                        <a class="btn btn-outline-success" href="{{ path("app_default") }}">{{app.user.getUsername}}</a>
+                                    {% endif %}
+                                    <a class="btn btn-outline-success" href="{{ path("security_logout") }}">Logout</a>
+                                </div>
+                            {% endif %}
+                            {% if not app.user %}
+                                <a class="btn btn-outline-success" href="{{ path("security_login") }}">Login</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+        {% endblock header %}
         {% block body %}{% endblock %}
     </body>
-</html>
+</html></body></html>
