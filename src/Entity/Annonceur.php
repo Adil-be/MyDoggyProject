@@ -64,4 +64,12 @@ class Annonceur extends User
 
         return $this;
     }
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // Add role Annonceur to Annonceur
+        $roles[] = 'ROLE_ANNONCEUR';
+
+        return array_unique($roles);
+    }
 }
