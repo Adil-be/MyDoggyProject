@@ -41,8 +41,9 @@ security:
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/annonceur, roles: ROLE_ANNONCEUR }
     - { path: ^/adoptant, roles: ROLE_ADOPTANT }
-    - { route: 'app_adoptant', roles: ROLE_ADOPTANT }
-    - { route: 'app_annonceur', roles: ROLE_ANNONCEUR }
+    - { route: "app_adoptant", roles: ROLE_ADOPTANT }
+    - { route: "app_annonceur", roles: ROLE_ANNONCEUR }
+    - { route: "security_redirect_account", roles: ROLE_USER }
 
 when@test:
   security:

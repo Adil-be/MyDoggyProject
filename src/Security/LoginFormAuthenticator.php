@@ -21,7 +21,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'security_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+
+    public function __construct(private UrlGeneratorInterface $urlGenerator, Security $security)
     {
     }
 
@@ -47,7 +48,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_default'));
+
+        return new RedirectResponse($this->urlGenerator->generate('security_redirect_account'));
         // throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }
 

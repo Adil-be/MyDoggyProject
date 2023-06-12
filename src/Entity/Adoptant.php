@@ -83,6 +83,7 @@ class Adoptant extends User
     public function getRoles(): array
     {
         $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
         // Add role Adoptant to adoptant
         $roles[] = 'ROLE_ADOPTANT';
 

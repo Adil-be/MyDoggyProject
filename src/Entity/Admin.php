@@ -12,6 +12,7 @@ class Admin extends User
     public function getRoles(): array
     {
         $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
         // Add role Adim to Adim
         $roles[] = 'ROLE_ADMIN';
 
