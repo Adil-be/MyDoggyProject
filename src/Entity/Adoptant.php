@@ -11,28 +11,20 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AdoptantRepository::class)]
 class Adoptant extends User  
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $firstName = null;
+    protected ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $lastName = null;
+    protected ?string $lastName = null;
 
     #[ORM\OneToMany(mappedBy: 'adoptant', targetEntity: AdoptionOffer::class)]
-    private Collection $AdoptionOffers;
+    protected Collection $AdoptionOffers;
 
     public function __construct()
     {
         $this->AdoptionOffers = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getFirstName(): ?string
