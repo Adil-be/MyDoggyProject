@@ -18,5 +18,4 @@ class Admin extends User
 
         return array_unique($roles);
     }
-
 }

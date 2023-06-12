@@ -8,10 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnnonceurRepository::class)]
-class Annonceur extends User 
+class Annonceur extends User
 {
-  
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -64,6 +62,7 @@ class Annonceur extends User
 
         return $this;
     }
+
     public function getRoles(): array
     {
         $roles = $this->roles;
