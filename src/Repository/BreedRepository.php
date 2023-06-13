@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Race;
+use App\Entity\Breed;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Race>
+ * @extends ServiceEntityRepository<Breed>
  *
- * @method Race|null find($id, $lockMode = null, $lockVersion = null)
- * @method Race|null findOneBy(array $criteria, array $orderBy = null)
- * @method Race[]    findAll()
- * @method Race[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Breed|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Breed|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Breed[]    findAll()
+ * @method Breed[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RaceRepository extends ServiceEntityRepository
+class BreedRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Race::class);
+        parent::__construct($registry, Breed::class);
     }
 
-    public function save(Race $entity, bool $flush = false): void
+    public function save(Breed $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class RaceRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Race $entity, bool $flush = false): void
+    public function remove(Breed $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -39,8 +39,8 @@ class RaceRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Race[] Returns an array of Race objects
+    //    /**
+//     * @return Breed[] Returns an array of Breed objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class RaceRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Race
+    //    public function findOneBySomeField($value): ?Breed
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

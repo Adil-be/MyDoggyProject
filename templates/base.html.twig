@@ -21,8 +21,8 @@
             <header>
                 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#">
-                            <img src="{{asset("img/bulldog.png")}}" alt="Logo site PuggLife" width="30" height="24" class="d-inline-block align-text-top">
+                        <a class="navbar-brand" href="{{asset('app_default')}}">
+                            <img src="{{asset("images/bulldog.png")}}" alt="Logo site PuggLife" width="30" height="24" class="d-inline-block align-text-top">
                             PuggLife
                         </a>
 
@@ -32,13 +32,10 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                    <a class="nav-link active" aria-current="page" href="{{asset('app_default')}}">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="">Liste Annonce</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled">Disabled</a>
                                 </li>
                             </ul>
                             {% if app.user %}
