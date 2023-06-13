@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\AnnnonceFixture;
 use App\Entity\Dog;
 use App\Repository\AnnonceRepository;
 use App\Repository\BreedRepository;
@@ -10,22 +9,18 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-
 class DogFixture extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
         protected BreedRepository $breedRepository,
         protected AnnonceRepository $annonceRepository
     ) {
-
     }
 
     public function load(ObjectManager $manager): void
     {
-
-
         $annonces = $this->annonceRepository->findAll();
-        // Fixture Breed + Dog
+        // Fixture Dog
         $dogsNames =
             [
                 'Admiral',
@@ -74,7 +69,7 @@ class DogFixture extends Fixture implements DependentFixtureInterface
             $randnb = mt_rand(1, 3);
             for ($i = 0; $i <= $randnb; ++$i) {
                 $randomNumber = mt_rand(0, count($breeds) - 1);
-                $breed=$breeds[$randomNumber];
+                $breed = $breeds[$randomNumber];
                 $dog->addBreed($breed);
                 $breeds[$randomNumber]->addDog($dog);
             }
@@ -90,8 +85,7 @@ class DogFixture extends Fixture implements DependentFixtureInterface
     {
         return [
             BreedFixture::class,
-            AnnnonceFixture::class
+            AnnnonceFixture::class,
         ];
-
     }
 }

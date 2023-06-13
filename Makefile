@@ -22,3 +22,8 @@ fixtures:
 	$(SYMFONY_CONSOLES) doctrine:fixture:load -n
 
 db.recreate:db.drop db.create migrate fixtures
+
+fixer:
+	composer fix
+stan:
+	composer analyse
