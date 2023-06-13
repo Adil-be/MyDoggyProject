@@ -23,3 +23,11 @@
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+# Images 
+public/images/dogImage/*
+!public/images/dogImage/.gitignore
+
+#ImageFixture
+
+!/var/*

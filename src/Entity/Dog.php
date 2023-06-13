@@ -34,8 +34,8 @@ class Dog
     #[ORM\OneToMany(mappedBy: 'dog', targetEntity: Image::class)]
     private Collection $images;
 
-    #[ORM\ManyToMany(targetEntity: Race::class, mappedBy: 'dogs')]
-    private Collection $races;
+    #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'dogs')]
+    private Collection $breeds;
 
     #[ORM\ManyToOne(inversedBy: 'dogs')]
     #[ORM\JoinColumn(nullable: false)]
@@ -47,7 +47,7 @@ class Dog
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->races = new ArrayCollection();
+        $this->breeds = new ArrayCollection();
         $this->adoptionOffers = new ArrayCollection();
     }
 
@@ -147,27 +147,27 @@ class Dog
     }
 
     /**
-     * @return Collection<int, Race>
+     * @return Collection<int, Breed>
      */
-    public function getRaces(): Collection
+    public function getBreeds(): Collection
     {
-        return $this->races;
+        return $this->breeds;
     }
 
-    public function addRace(Race $race): self
+    public function addBreed(Breed $breed): self
     {
-        if (!$this->races->contains($race)) {
-            $this->races->add($race);
-            $race->addDog($this);
+        if (!$this->breeds->contains($breed)) {
+            $this->breeds->add($breed);
+            $breed->addDog($this);
         }
 
         return $this;
     }
 
-    public function removeRace(Race $race): self
+    public function removeBreeds(Breed $breed): self
     {
-        if ($this->races->removeElement($race)) {
-            $race->removeDog($this);
+        if ($this->breeds->removeElement($breed)) {
+            $breed->removeDog($this);
         }
 
         return $this;

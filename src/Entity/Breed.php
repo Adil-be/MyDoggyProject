@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\RaceRepository;
+use App\Repository\BreedRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RaceRepository::class)]
-class Race
+#[ORM\Entity(repositoryClass: BreedRepository::class)]
+class Breed
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,7 +22,7 @@ class Race
     #[ORM\Column(type: Types::TEXT)]
     private ?string $descritpion = null;
 
-    #[ORM\ManyToMany(targetEntity: Dog::class, inversedBy: 'races')]
+    #[ORM\ManyToMany(targetEntity: Dog::class, inversedBy: 'breeds')]
     private Collection $dogs;
 
     public function __construct()
