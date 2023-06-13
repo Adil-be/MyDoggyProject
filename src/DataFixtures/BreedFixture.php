@@ -1,10 +1,10 @@
 <?php
+
 namespace App\DataFixtures;
 
 use App\Entity\Breed;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-
 
 class BreedFixture extends Fixture
 {
@@ -24,5 +24,4 @@ class BreedFixture extends Fixture
 
         $manager->flush();
     }
-
 }

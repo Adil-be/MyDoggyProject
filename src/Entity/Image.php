@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-
 #[Vich\Uploadable]
 class Image
 {
@@ -45,6 +44,7 @@ class Image
             // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTimeImmutable();
         }
+
         return $this;
     }
 

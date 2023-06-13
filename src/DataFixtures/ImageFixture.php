@@ -10,9 +10,6 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-
-
-
 class ImageFixture extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
@@ -24,31 +21,29 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
     {
         $dogs = $this->dogRepository->findAll();
         $fileSystem = new Filesystem();
-        $destination = __DIR__ . '/../../public/images/dogImages/';
-
-
+        $destination = __DIR__.'/../../public/images/dogImages/';
 
         foreach ($dogs as $dog) {
             $namefolder = $dog->getId();
             $numberImage = mt_rand(1, 6);
             $previousNum = [];
-            for ($i = 1; $i <= $numberImage; $i++) {
+            for ($i = 1; $i <= $numberImage; ++$i) {
                 $rndNum = mt_rand(0, 40);
-                while (in_array($rndNum, $previousNum, false)) {
+                while (in_array($rndNum, $previousNum, true)) {
                     $rndNum = mt_rand(0, 40);
                 }
                 $imageFile = $this->createImage($rndNum);
                 $previousNum[] = $rndNum;
-                $fileDestination = $destination . $namefolder;
+                $fileDestination = $destination.$namefolder;
                 $fileSystem->copy(
                     $imageFile->getRealPath(),
-                    $fileDestination . '/' . $imageFile->getFilename()
+                    $fileDestination.'/'.$imageFile->getFilename()
                 );
 
                 $image = new Image();
                 $image
                     ->setSize($imageFile->getSize())
-                    ->setAlt("image of a dog")
+                    ->setAlt('image of a dog')
                     ->setPath($imageFile->getFilename())
                     ->setDog($dog);
 
@@ -64,14 +59,13 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
         return [
             DogFixture::class,
         ];
-
     }
 
     public function createImage(int $rndNum): UploadedFile
     {
-        $folder = __DIR__ . '/../../var/images/';
-        $imageName = "dog" . $rndNum . ".jpg";
-        $src = $folder . $imageName;
+        $folder = __DIR__.'/../../var/images/';
+        $imageName = 'dog'.$rndNum.'.jpg';
+        $src = $folder.$imageName;
 
         return new UploadedFile(
             path: $src,

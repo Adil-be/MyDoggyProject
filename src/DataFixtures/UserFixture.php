@@ -6,7 +6,6 @@ use App\Entity\Admin;
 use App\Entity\Adoptant;
 use App\Entity\Annonceur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -18,6 +17,7 @@ class UserFixture extends Fixture
     {
         $this->hasher = $hasher;
     }
+
     public function load(ObjectManager $manager): void
     {
         // fixture Admin
@@ -91,8 +91,6 @@ class UserFixture extends Fixture
             );
             $manager->persist($annonceur);
         }
-
         $manager->flush();
     }
-
 }

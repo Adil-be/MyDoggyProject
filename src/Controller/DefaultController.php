@@ -22,11 +22,11 @@ class DefaultController extends AbstractController
     {
         $user = $this->getUser();
         $roles = $user->getRoles();
-        if (in_array('ROLE_ADMIN', $roles, false)) {
+        if (in_array('ROLE_ADMIN', $roles, true)) {
             return $this->redirectToRoute('app_default');
-        } elseif (in_array('ROLE_ANNONCEUR', $roles, false)) {
+        } elseif (in_array('ROLE_ANNONCEUR', $roles, true)) {
             return $this->redirectToRoute('app_annonceur');
-        } elseif (in_array('ROLE_ADOPTANT', $roles, false)) {
+        } elseif (in_array('ROLE_ADOPTANT', $roles, true)) {
             return $this->redirectToRoute('app_adoptant');
         } else {
             return $this->redirectToRoute('app_default');
