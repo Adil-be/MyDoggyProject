@@ -17,6 +17,7 @@
         {% endblock %}
     </head>
     <body>
+        {# debut block header #}
         {% block header %}
             <header>
                 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -59,8 +60,12 @@
                     </div>
                 </nav>
             </header>
-
         {% endblock header %}
-        {% block body %}{% endblock %}
+        {# debut  body #}
+        <main
+            class="container">
+            {# debut block body #}
+            {% block body %}{% endblock %}
+        </main>
     </body>
-</html></body></html>
+</html>

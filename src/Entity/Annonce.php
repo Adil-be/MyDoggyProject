@@ -174,6 +174,62 @@ class Annonce
         return $this;
     }
 
+    public function getFirstImage(): Image
+    {
+        $firstDog = $this->getDogs()[0];
+        $firstImage = $firstDog->getImages()[0];
+        return $firstImage;
+    }
+
+    /**
+     * @return array<int, Image>
+     */
+    public function getImages()
+    {
+        $dogs = $this->getDogs();
+        $nbrDog = count($dogs);
+        $n = 0;
+        $y = 1;
+        $images = [];
+        for ($i = 0; $i < 2; $i++) {
+            if ($y >= $nbrDog) {
+                $y = 0;
+                $n++;
+            }
+            $image = $dogs[$y]->getImages()[$n];
+            if (!empty($image)) {
+                $images[] = $image;
+            }
+            $y++;
+        }
+        return $images;
+    }
+
+
+    public function numberOfDogs(): int
+    {
+        return count($this->getDogs());
+    }
+
+    /**
+     * @return array<int, Breed>
+     */
+
+    public function getBreeds()
+    {
+        $dogs = $this->getDogs();
+        $breeds = [];
+        foreach ($dogs as $dog) {
+            $tmpBreeds = $dog->getBreeds();
+            foreach ($tmpBreeds as $breed) {
+                if (!in_array($breed, $breeds, true)) {
+                    $breeds[] = $breed;
+                }
+            }
+        }
+        return $breeds;
+    }
+
     public function __toString()
     {
         return $this->getTitle();

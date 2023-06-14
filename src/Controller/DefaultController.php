@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\AnnonceRepository;
+use App\Repository\AnnonceurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,10 +12,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     #[Route('/', name: 'app_default')]
-    public function index(): Response
-    {
+    public function index(
+        AnnonceRepository $annonceRepository,
+        AnnonceurRepository $annonceurRepository
+    ): Response {
+        $annonces = $annonceRepository->findBy(
+            [
+                'isAvailable' => true,
+            ],
+            [
+                'modifiedAt' => 'DESC',
+            ],
+            5,
+            0
+        );
+        $annonceurs = $annonceurRepository->findByRecentAnnonce();
+        dump($annonceurs);
+
+        dump($annonces);
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
+            'annonces' => $annonces,
+            'annonceurs' => $annonceurs
         ]);
     }
 
