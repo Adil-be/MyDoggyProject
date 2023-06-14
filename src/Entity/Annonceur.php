@@ -13,6 +13,9 @@ class Annonceur extends User
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    /**
+     * @var Collection<int, Annonce>
+     */
     #[ORM\OneToMany(mappedBy: 'annonceur', targetEntity: Annonce::class)]
     private Collection $annonces;
 
@@ -70,5 +73,10 @@ class Annonceur extends User
         $roles[] = 'ROLE_ANNONCEUR';
 
         return array_unique($roles);
+    }
+
+    public function __toString()
+    {
+        return $this->getEmail();
     }
 }

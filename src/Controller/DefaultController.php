@@ -23,7 +23,7 @@ class DefaultController extends AbstractController
         $user = $this->getUser();
         $roles = $user->getRoles();
         if (in_array('ROLE_ADMIN', $roles, true)) {
-            return $this->redirectToRoute('app_default');
+            return $this->redirectToRoute('dashboard_admin');
         } elseif (in_array('ROLE_ANNONCEUR', $roles, true)) {
             return $this->redirectToRoute('app_annonceur');
         } elseif (in_array('ROLE_ADOPTANT', $roles, true)) {
