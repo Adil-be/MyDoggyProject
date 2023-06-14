@@ -22,6 +22,9 @@ class Breed
     #[ORM\Column(type: Types::TEXT)]
     private ?string $descritpion = null;
 
+    /**
+     * @var Collection<int, Dog>
+     */
     #[ORM\ManyToMany(targetEntity: Dog::class, inversedBy: 'breeds')]
     private Collection $dogs;
 
@@ -81,5 +84,10 @@ class Breed
         $this->dogs->removeElement($dog);
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

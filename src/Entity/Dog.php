@@ -31,9 +31,15 @@ class Dog
     #[ORM\Column]
     private ?bool $acceptAnimmals = null;
 
+    /**
+     * @var Collection<int, Image>
+     */
     #[ORM\OneToMany(mappedBy: 'dog', targetEntity: Image::class)]
     private Collection $images;
 
+    /**
+     * @var Collection<int, Breed>
+     */
     #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'dogs')]
     private Collection $breeds;
 
@@ -41,6 +47,9 @@ class Dog
     #[ORM\JoinColumn(nullable: false)]
     private ?Annonce $annonce = null;
 
+    /**
+     * @var Collection<int, AdoptionOffer>
+     */
     #[ORM\ManyToMany(targetEntity: AdoptionOffer::class, mappedBy: 'dogs')]
     private Collection $adoptionOffers;
 
@@ -210,5 +219,10 @@ class Dog
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

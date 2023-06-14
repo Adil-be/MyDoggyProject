@@ -28,10 +28,16 @@ class Annonce
     #[ORM\Column]
     private ?bool $isAvailable = null;
 
+    /**
+     * @var Collection<int, Dog>
+     */
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Dog::class, cascade: ['persist', 'remove'])]
     private Collection $dogs;
 
-    #[ORM\OneToMany(mappedBy: 'Annonce', targetEntity: AdoptionOffer::class)]
+    /**
+     * @var Collection<int, AdoptionOffer>
+     */
+    #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: AdoptionOffer::class)]
     private Collection $adoptionOffers;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
@@ -166,5 +172,10 @@ class Annonce
         $this->annonceur = $annonceur;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

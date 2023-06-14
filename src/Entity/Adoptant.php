@@ -16,12 +16,15 @@ class Adoptant extends User
     #[ORM\Column(length: 255, nullable: true)]
     protected ?string $lastName = null;
 
+    /**
+     * @var Collection<int, AdoptionOffer>
+     */
     #[ORM\OneToMany(mappedBy: 'adoptant', targetEntity: AdoptionOffer::class)]
-    protected Collection $AdoptionOffers;
+    protected Collection $adoptionOffers;
 
     public function __construct()
     {
-        $this->AdoptionOffers = new ArrayCollection();
+        $this->adoptionOffers = new ArrayCollection();
     }
 
     public function getFirstName(): ?string
@@ -53,13 +56,13 @@ class Adoptant extends User
      */
     public function getAdoptionOffers(): Collection
     {
-        return $this->AdoptionOffers;
+        return $this->adoptionOffers;
     }
 
     public function addAdoptionOffer(AdoptionOffer $adoptionOffer): self
     {
-        if (!$this->AdoptionOffers->contains($adoptionOffer)) {
-            $this->AdoptionOffers->add($adoptionOffer);
+        if (!$this->adoptionOffers->contains($adoptionOffer)) {
+            $this->adoptionOffers->add($adoptionOffer);
             $adoptionOffer->setAdoptant($this);
         }
 
@@ -68,7 +71,7 @@ class Adoptant extends User
 
     public function removeAdoptionOffer(AdoptionOffer $adoptionOffer): self
     {
-        if ($this->AdoptionOffers->removeElement($adoptionOffer)) {
+        if ($this->adoptionOffers->removeElement($adoptionOffer)) {
             // set the owning side to null (unless already changed)
             if ($adoptionOffer->getAdoptant() === $this) {
                 $adoptionOffer->setAdoptant(null);

@@ -27,3 +27,5 @@ fixer:
 	composer fix
 stan:
 	composer analyse
+
+check:fixer stan

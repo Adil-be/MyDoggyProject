@@ -28,7 +28,7 @@ class Message
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?AdoptionOffer $AdoptionOffer = null;
+    private ?AdoptionOffer $adoptionOffer = null;
 
     public function getId(): ?int
     {
@@ -85,12 +85,12 @@ class Message
 
     public function getAdoptionOffer(): ?AdoptionOffer
     {
-        return $this->AdoptionOffer;
+        return $this->adoptionOffer;
     }
 
-    public function setAdoptionOffer(?AdoptionOffer $AdoptionOffer): self
+    public function setAdoptionOffer(?AdoptionOffer $adoptionOffer): self
     {
-        $this->AdoptionOffer = $AdoptionOffer;
+        $this->adoptionOffer = $adoptionOffer;
 
         return $this;
     }

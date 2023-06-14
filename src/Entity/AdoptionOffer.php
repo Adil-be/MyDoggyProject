@@ -23,15 +23,21 @@ class AdoptionOffer
 
     #[ORM\ManyToOne(inversedBy: 'adoptionOffers')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Annonce $Annonce = null;
+    private ?Annonce $annonce = null;
 
+    /**
+     * @var Collection<int, Dog>
+     */
     #[ORM\ManyToMany(targetEntity: Dog::class, inversedBy: 'adoptionOffers')]
     private Collection $dogs;
 
-    #[ORM\OneToMany(mappedBy: 'AdoptionOffer', targetEntity: Message::class)]
+    /**
+     * @var Collection<int, Message>
+     */
+    #[ORM\OneToMany(mappedBy: 'adoptionOffer', targetEntity: Message::class)]
     private Collection $messages;
 
-    #[ORM\ManyToOne(inversedBy: 'AdoptionOffers')]
+    #[ORM\ManyToOne(inversedBy: 'adoptionOffers')]
     private ?Adoptant $adoptant = null;
 
     public function __construct()
@@ -71,12 +77,12 @@ class AdoptionOffer
 
     public function getAnnonce(): ?Annonce
     {
-        return $this->Annonce;
+        return $this->annonce;
     }
 
-    public function setAnnonce(?Annonce $Annonce): self
+    public function setAnnonce(?Annonce $annonce): self
     {
-        $this->Annonce = $Annonce;
+        $this->annonce = $annonce;
 
         return $this;
     }

@@ -52,8 +52,8 @@ class UserFixture extends Fixture
                 ->setEmail($userData['email'])
                 ->setCity($userData['address']['city'])
                 ->setPhoneNumber($userData['phone'])
-                ->setZipCode($userData['address']['zipcode'])
-                ->setFirstname($firstName)
+                ->setZipCode($userData['address']['zipcode']);
+            $adoptant->setFirstName($firstName)
                 ->setLastName($lastName);
             $adoptant->setPassword(
                 $this->hasher->hashPassword(
@@ -81,8 +81,8 @@ class UserFixture extends Fixture
                 ->setEmail($assocData[$i - 5]['email'])
                 ->setCity($userData['address']['city'])
                 ->setPhoneNumber($userData['phone'])
-                ->setZipCode($userData['address']['zipcode'])
-                ->setName($assocData[$i - 5]['assocName']);
+                ->setZipCode($userData['address']['zipcode']);
+            $annonceur->setName($assocData[$i - 5]['assocName']);
             $annonceur->setPassword(
                 $this->hasher->hashPassword(
                     $annonceur,

@@ -105,4 +105,9 @@ class Image
     {
         return $this->size;
     }
+
+    public function __toString()
+    {
+        return (string) $this->getPath();
+    }
 }
