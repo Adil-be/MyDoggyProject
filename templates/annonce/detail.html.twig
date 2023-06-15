@@ -14,7 +14,9 @@
         <p>last modified :
             {{annonce.getModifiedAt|format_datetime()}}
         </p>
-        <div class="text-center">
+        <div
+            class="text-center">
+            {# the user must be a registered adoptant before applyon for adoption #}
             {% if is_granted('ROLE_ADOPTANT') %}
                 <a href="{{path('adoptant_applyForAdoption')}}" class="btn btn-outline-primary">Apply for adoption</a>
             {% else %}
@@ -26,9 +28,11 @@
     </section>
     <section>
         <h2 class="text-center my-3">Dogs concerned :</h2>
-        <div class="row justify-content-center">
+        <div
+            class="row justify-content-center">
+            {# we use the method getAdoptableDog to avoid displaying dogs that are already adopted #}
             {% for dog in annonce.getAdoptableDog %}
-                {% include "includes/_dog.html.twig" %}
+                {% include "includes/_dog.html.twig" with {"dog":dog} only %}
             {% endfor %}
         </div>
 

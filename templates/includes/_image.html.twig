@@ -1,4 +1,6 @@
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div
+    id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    {# !!! this carrousel doesn't seem to work #}
     <ol class="carousel-indicators">
         {% for image in images %}
             <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}" {% if loop.first %} class="active" {% endif %}></li>
