@@ -28,6 +28,10 @@ class AdoptantCrudController extends AbstractCrudController
             TextField::new('lastName'),
             CollectionField::new('adoptionOffers')->onlyOnIndex(),
             AssociationField::new('adoptionOffers')->onlyOnForms(),
+            TextField::new('password')->onlyOnForms(),
+            TextField::new('phoneNumber')->onlyOnForms(),
+            TextField::new('city')->onlyOnForms(),
+            TextField::new('zipCode')->onlyOnForms(),
         ];
     }
 

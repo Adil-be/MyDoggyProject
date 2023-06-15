@@ -12,6 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 class Image
 {
+    public const FOLDER = 'images/dogImages/';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -60,7 +61,9 @@ class Image
 
     public function getPath(): ?string
     {
-        return $this->path;
+        $fullPath = self::FOLDER.$this->getDog()->getId().'/';
+
+        return $fullPath.$this->path;
     }
 
     public function setPath(string $path): self

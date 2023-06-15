@@ -1,0 +1,40 @@
+<div class="col-md-6">
+    <div class="card mb-30">
+        <a class="card-img-tiles" href="#" data-abc="true">
+            <div class="inner">
+                <div class="main-img"><img src="{{asset(annonce.getFirstImage.getPath)}}" alt="{{annonce.getFirstImage.getAlt}}"></div>
+                <div class="thumblist">
+                    {% for image in annonce.getImages %}
+                        <img src="{{asset(image.getPath)}}" alt="{{image.path}}">
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+        <div class="card-body text-center">
+            <h4 class="card-title">{{annonce.getTitle}}</h4>
+            <p class="text-muted">Annonceur :
+                {{annonce.getAnnonceur}}
+            </p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">nbr of dogs :
+                    {{annonce.numberOfAdoptableDog}}</li>
+                <li class="list-group-item">
+                    <small class="text-body-secondary">udapted :
+                        {{annonce.getModifiedAt|format_datetime(locale='en')}}</small>
+                </li>
+            </ul>
+            <h4>Breeds :</h4>
+            <ul class="list-group list-group-flush">
+
+                <li class="list-group-item">
+                    {% for breed in annonce.getBreeds %}
+                        {{breed}},
+                    {% endfor %}
+                </li>
+            </ul>
+
+
+            <a class="btn btn-outline-primary btn-sm" href="{{path('annonce_detail',{'id': annonce.getId})}}" data-abc="true">View Annonce</a>
+        </div>
+    </div>
+</div>

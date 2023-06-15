@@ -23,6 +23,9 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
         $fileSystem = new Filesystem();
         $destination = __DIR__.'/../../public/images/dogImages/';
 
+        // we delete the content of the $destination before uploading the images
+        $succes = $this->deleteDir($destination);
+
         foreach ($dogs as $dog) {
             $namefolder = $dog->getId();
             $numberImage = mt_rand(1, 6);
@@ -73,5 +76,22 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
             mimeType: 'image/Jpeg',
             test: true
         );
+    }
+
+    // this function recursively delete the content of a folder
+    // this is use to avoid creating the new images and their folder on top of the images of the previous fixture
+    // this way we don't have to delete manuelly the content of /images/dogImages each type we load the fixtures
+    // found on https://www.php.net/manual/en/function.rmdir.php#110489
+
+    public function deleteDir(string $dir): bool
+    {
+        $files = array_diff(scandir($dir), ['.', '..']);
+
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? $this->deleteDir("$dir/$file") : unlink("$dir/$file");
+        }
+
+        // https://www.php.net/manual/en/function.rmdir.php
+        return rmdir($dir);
     }
 }

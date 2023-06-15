@@ -39,22 +39,19 @@ class AnnonceurRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Annonceur[] Returns an array of Annonceur objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Annonceur[] Returns an array of Annonceur objects
+     */
+    public function findByRecentAnnonce(): array
+    {
+        $q = $this->createQueryBuilder('asso');
+        $q->leftJoin('asso.annonces', 'a')
+            ->orderBy('a.modifiedAt', 'DESC');
 
-//    public function findOneBySomeField($value): ?Annonceur
+        return $q->getQuery()->getResult();
+    }
+
+    //    public function findOneBySomeField($value): ?Annonceur
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

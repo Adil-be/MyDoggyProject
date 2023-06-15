@@ -4,23 +4,26 @@
 {% endblock %}
 
 {% block body %}
+    <section>
+        <h2>Dernières Annonces</h2>
+        <div class="row mt-100">
+            {% for annonce in annonces %}
+                {% include "includes/_annonce.html.twig" with {'annonce': annonce} only %}
+            {% endfor %}
+        </div>
+    </section>
+    <section>
+        <h2>Listes Annonceurs</h2>
+        <div class="container mt-50 mb-50">
+            <div class="row">
+                <div class="">
+                    {% for annonceur in annonceurs %}
+                        {% include "includes/_annonceur.html.twig" with {'annonceur': annonceur} only %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="example-wrapper">
-        <h1>Hello
-            {{ controller_name }}! ✅</h1>
 
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at
-                <code>
-                    <a href="{{ '/Users/snowkirati/doggydeal/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a>
-                </code>
-            </li>
-            <li>Your template at
-                <code>
-                    <a href="{{ '/Users/snowkirati/doggydeal/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a>
-                </code>
-            </li>
-        </ul>
-    </div>
 {% endblock %}
