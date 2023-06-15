@@ -27,8 +27,7 @@ class AnnonceCrudController extends AbstractCrudController
             DateTimeField::new('createdAt')->hideWhenUpdating()->hideWhenCreating(),
             DateTimeField::new('modifiedAt')->hideWhenCreating(),
             BooleanField::new('isAvailable')->onlyOnForms(),
-            CollectionField::new('dogs')->onlyOnIndex(),
-            AssociationField::new('dogs')->onlyOnForms(),
+            CollectionField::new('dogs'),
             AssociationField::new('annonceur'),
         ];
     }
