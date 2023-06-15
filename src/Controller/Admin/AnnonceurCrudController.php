@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Annonceur;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -25,8 +24,7 @@ class AnnonceurCrudController extends AbstractCrudController
             EmailField::new('email'),
             TextField::new('username'),
             TextField::new('name'),
-            CollectionField::new('annonces')->onlyOnIndex(),
-            AssociationField::new('annonces')->onlyOnForms(),
+            CollectionField::new('annonces'),
             TextField::new('password')->onlyOnForms(),
             TextField::new('phoneNumber')->onlyOnForms(),
             TextField::new('city')->onlyOnForms(),

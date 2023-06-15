@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Adoptant;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -26,8 +25,7 @@ class AdoptantCrudController extends AbstractCrudController
             TextField::new('username'),
             TextField::new('firstName'),
             TextField::new('lastName'),
-            CollectionField::new('adoptionOffers')->onlyOnIndex(),
-            AssociationField::new('adoptionOffers')->onlyOnForms(),
+            CollectionField::new('adoptionOffers'),
             TextField::new('password')->onlyOnForms(),
             TextField::new('phoneNumber')->onlyOnForms(),
             TextField::new('city')->onlyOnForms(),

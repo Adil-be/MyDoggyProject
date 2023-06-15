@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Breed;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -24,8 +23,7 @@ class BreedCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             TextField::new('name'),
             TextEditorField::new('descritpion'),
-            AssociationField::new('dogs')->onlyOnForms(),
-            CollectionField::new('dogs')->onlyOnIndex(),
+            CollectionField::new('dogs'),
         ];
     }
 
