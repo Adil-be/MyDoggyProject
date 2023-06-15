@@ -75,6 +75,26 @@ class Annonceur extends User
         return array_unique($roles);
     }
 
+    // filter method
+    // https://github.com/doctrine/collections/blob/2.1.x/docs/en/index.rst#filter
+
+    public function getNbrAvailableAnnonce(): ?int
+    {
+        $annonces = $this->getAnnonces();
+        $availableAnnonces = $annonces->filter(function ($a) {
+            return $a->isIsAvailable();
+        });
+
+        return count($availableAnnonces);
+    }
+
+    public function getNbrClosedAnnonce(): int
+    {
+        $annonces = $this->getAnnonces();
+
+        return count($annonces) - $this->getNbrAvailableAnnonce();
+    }
+
     public function __toString()
     {
         return $this->getEmail();

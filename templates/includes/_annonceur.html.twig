@@ -1,0 +1,39 @@
+{# <div>
+    <h3>{{annonceur.getName}}</h3>
+    <p>{{annonceur.getEmail}}</p>
+    <p>{{annonceur.getPhoneNumber}}</p>
+    <p>
+        number of available annonces :
+        {{annonceur.getNbrAvailableAnnonce}}</p>
+    <p>
+        number of annonce answered :
+        {{annonceur.getNbrAvailableAnnonce}}</p>
+</div> #}
+<div class="card card-body mt-3">
+    <div class=" align-items-center align-items-md-start text-center text-md-start">
+        <div class="media-body">
+            <h3 class="media-title font-weight-semibold">
+                {{annonceur.getName}}
+            </h3>
+
+            <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
+                <li class="list-inline-item">
+                    Email :
+                    <a href="#" class="text-muted">{{annonceur.getEmail}}</a>
+                </li>
+                <li class="list-inline-item">
+                    Phone :
+                    <a href="#" class="text-muted">{{annonceur.getPhoneNumber}}</a>
+                </li>
+            </ul>
+
+            <ul class="list-inline list-inline-dotted mb-0">
+                <li class="list-inline-item">number of available annonces :
+                    {{annonceur.getNbrAvailableAnnonce}}
+                </li>
+                <li class="list-inline-item">number of annonce closed :{{annonceur.getNbrClosedAnnonce}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

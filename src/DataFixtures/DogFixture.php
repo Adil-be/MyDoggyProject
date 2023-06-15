@@ -57,13 +57,14 @@ class DogFixture extends Fixture implements DependentFixtureInterface
         foreach ($dogsNames as $dogName) {
             $dog = new Dog();
             $rnd = mt_rand(0, 1);
-            $isAdopted = [true, false];
-
+            $boolOption = [true, false];
+            $rnd2 = mt_rand(0, 1);
             $dog
                 ->setName($dogName)
                 ->setDescription($descrip)
                 ->setAntecedant($antec)
-                ->setAcceptAnimmals($isAdopted[$rnd])
+                ->setAcceptAnimmals($boolOption[$rnd])
+                ->setIsLof($boolOption[$rnd2])
                 ->setIsAdopted(false);
 
             $randnb = mt_rand(1, 3);

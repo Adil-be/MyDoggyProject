@@ -1,20 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AnnonceController!{% endblock %}
+{% block title %}Hello AnnonceController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section>
+        <h1 class="text-center my-5">Tilte:
+            <br>{{annonce.getTitle}}
+        </h1>
+        {# Works because of the function __toString #}
+        <p>Annonceur :
+            {{annonce.getAnnonceur}}</p>
+        <p>last modified :
+            {{annonce.getModifiedAt|format_datetime()}}
+        </p>
+        <div class="text-center">
+            {% if is_granted('ROLE_ADOPTANT') %}
+                <a href="{{path('adoptant_applyForAdoption')}}" class="btn btn-outline-primary">Apply for adoption</a>
+            {% else %}
+                <p>you need to be register as an adoptant to apply for adoption
+                    <br><a href="{{path('security_login')}}" class="btn btn-outline-primary">loggin</a>
+                </p>
+            {% endif %}
+        </div>
+    </section>
+    <section>
+        <h2 class="text-center my-3">Dogs concerned :</h2>
+        <div class="row justify-content-center">
+            {% for dog in annonce.getAdoptableDog %}
+                {% include "includes/_dog.html.twig" %}
+            {% endfor %}
+        </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/hzndl/OneDrive/Documents/Symfony/MyDoggyProject/src/Controller/AnnonceController.php'|file_link(0) }}">src/Controller/AnnonceController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/hzndl/OneDrive/Documents/Symfony/MyDoggyProject/templates/annonce/index.html.twig'|file_link(0) }}">templates/annonce/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+    </section>
+{% endblock body %}

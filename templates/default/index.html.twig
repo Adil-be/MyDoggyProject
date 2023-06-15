@@ -13,8 +13,16 @@
         </div>
     </section>
     <section>
-        <h2>Dernières Annonces</h2>
-        {% for annonceur in annonceurs %}{% endfor %}
+        <h2>Listes Annonceurs</h2>
+        <div class="container mt-50 mb-50">
+            <div class="row">
+                <div class="">
+                    {% for annonceur in annonceurs %}
+                        {% include "includes/_annonceur.html.twig" with {'annonceur': annonceur} only %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </section>
 
 

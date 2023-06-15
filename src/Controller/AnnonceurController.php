@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnonceurController extends AbstractController
 {
     #[Route('/annonceur', name: 'app_annonceur')]
+    #[Route('/applyAdoption', name: 'annonceur_applyAdoption')]
     public function index(): Response
     {
         return $this->render('annonceur/index.html.twig', [

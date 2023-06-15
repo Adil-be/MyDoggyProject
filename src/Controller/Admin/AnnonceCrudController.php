@@ -22,14 +22,14 @@ class AnnonceCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
+            IdField::new('id')->onlyOnIndex(),
             TextField::new('title'),
-            DateTimeField::new('createdAt'),
-            DateTimeField::new('modifiedAt'),
+            DateTimeField::new('createdAt')->hideWhenUpdating()->hideWhenCreating(),
+            DateTimeField::new('modifiedAt')->hideWhenCreating(),
             BooleanField::new('isAvailable')->onlyOnForms(),
             CollectionField::new('dogs')->onlyOnIndex(),
             AssociationField::new('dogs')->onlyOnForms(),
-            AssociationField::new('annonceur')->autocomplete(),
+            AssociationField::new('annonceur'),
         ];
     }
 

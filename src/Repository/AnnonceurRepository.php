@@ -45,7 +45,7 @@ class AnnonceurRepository extends ServiceEntityRepository
     public function findByRecentAnnonce(): array
     {
         $q = $this->createQueryBuilder('asso');
-        $q->innerJoin('asso.annonces', 'a')
+        $q->leftJoin('asso.annonces', 'a')
             ->orderBy('a.modifiedAt', 'DESC');
 
         return $q->getQuery()->getResult();

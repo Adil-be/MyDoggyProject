@@ -15,4 +15,12 @@ class AdoptantController extends AbstractController
             'controller_name' => 'AdoptantController',
         ]);
     }
+
+    #[Route('/applyAdoption', name: 'adoptant_applyForAdoption')]
+    public function applyAdoption(): Response
+    {
+        return $this->render('annonceur/index.html.twig', [
+            'controller_name' => 'AnnonceurController',
+        ]);
+    }
 }

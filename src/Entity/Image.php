@@ -60,8 +60,9 @@ class Image
 
     public function getPath(): ?string
     {
-        $folder = 'images/dogImages/' . $this->getDog()->getId() . '/';
-        return $folder . $this->path;
+        $folder = 'images/dogImages/'.$this->getDog()->getId().'/';
+
+        return $folder.$this->path;
     }
 
     public function setPath(string $path): self

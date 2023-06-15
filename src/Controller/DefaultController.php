@@ -30,10 +30,11 @@ class DefaultController extends AbstractController
         dump($annonceurs);
 
         dump($annonces);
+
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'annonces' => $annonces,
-            'annonceurs' => $annonceurs
+            'annonceurs' => $annonceurs,
         ]);
     }
 

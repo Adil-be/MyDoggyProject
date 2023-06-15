@@ -53,6 +53,9 @@ class Dog
     #[ORM\ManyToMany(targetEntity: AdoptionOffer::class, mappedBy: 'dogs')]
     private Collection $adoptionOffers;
 
+    #[ORM\Column]
+    private ?bool $isLof = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -224,5 +227,17 @@ class Dog
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function isIsLof(): ?bool
+    {
+        return $this->isLof;
+    }
+
+    public function setIsLof(bool $isLof): self
+    {
+        $this->isLof = $isLof;
+
+        return $this;
     }
 }
