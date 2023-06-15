@@ -2,11 +2,11 @@
     <div class="card mb-30">
         <a class="card-img-tiles" href="#" data-abc="true">
             <div class="inner">
-                <div class="main-img"><img src="{{asset(annonce.getFirstImage.getPath)}}" alt="{{annonce.getFirstImage.getAlt}}"></div>
-                <div class="thumblist">
-                    {% for image in annonce.getImages %}
-                        <img src="{{asset(image.getPath)}}" alt="{{image.path}}">
-                    {% endfor %}
+                {# <div class="main-img"><img src="{{asset(annonce.getFirstImage.getPath)}}" alt="{{annonce.getFirstImage.getAlt}}"></div> #}
+                <div
+                    class="thumblist">{# {% for image in annonce.getImages %}
+                                                <img src="{{asset(image.getPath)}}" alt="{{image.path}}">
+                                            {% endfor %} #}
                 </div>
             </div>
         </a>
