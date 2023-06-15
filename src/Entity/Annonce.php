@@ -211,6 +211,7 @@ class Annonce
     {
         return count($this->getDogs());
     }
+
     public function numberOfAdoptableDog(): int
     {
         return count($this->getAdoptableDog());
