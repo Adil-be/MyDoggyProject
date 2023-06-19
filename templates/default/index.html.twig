@@ -4,16 +4,16 @@
 {% endblock %}
 
 {% block body %}
-    <section>
-        <h2>Dernières Annonces</h2>
-        <div class="row mt-100">
+    <section class="mt-5">
+        <h2 class="text-center">Dernières Annonces</h2>
+        <div class="row mt-5">
             {% for annonce in annonces %}
                 {% include "includes/_annonce.html.twig" with {'annonce': annonce} only %}
             {% endfor %}
         </div>
     </section>
-    <section>
-        <h2>Listes Annonceurs</h2>
+    <section class="mt-5">
+        <h2 class="text-center">Listes Annonceurs</h2>
         <div class="container mt-50 mb-50">
             <div class="row">
                 <div class="">
