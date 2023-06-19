@@ -13,6 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Image
 {
     public const FOLDER = 'images/dogImages/';
+    public const PLACEHOLDER = 'images/placeholder.jpg';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

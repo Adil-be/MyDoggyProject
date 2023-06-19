@@ -176,10 +176,16 @@ class Annonce
 
     public function getFirstImage(): Image
     {
-        $firstDog = $this->getDogs()[0];
-        $firstImage = $firstDog->getImages()[0];
+        foreach ($this->getDogs() as $dog) {
+            $firstImage = $dog->getImages()[0];
+            if (isset($dog->getImages()[0]) || !is_null($dog->getImages()[0])) {
+                $firstImage = $dog->getImages()[0];
 
-        return $firstImage;
+                return $firstImage;
+            }
+        }
+
+        return (new Image())->setPath(Image::PLACEHOLDER);
     }
 
     /**
@@ -187,24 +193,58 @@ class Annonce
      */
     public function getImages()
     {
-        $dogs = $this->getDogs();
-        $nbrDog = count($dogs);
-        $n = 0;
-        $y = 1;
         $images = [];
-        for ($i = 0; $i < 2; ++$i) {
-            if ($y >= $nbrDog) {
-                $y = 0;
-                ++$n;
-            }
-            $image = $dogs[$y]->getImages()[$n];
-            if (isset($image)) {
+        $dogs = $this->getDogs();
+        foreach ($dogs as $dog) {
+            foreach ($dog->getImages() as $image) {
                 $images[] = $image;
             }
-            ++$y;
         }
+        shuffle($images);
 
         return $images;
+    }
+
+    /**
+     * @return array<int, Image>
+     */
+    public function getNImages(int $nbr)
+    {
+        $nImage = [];
+        $images = $this->getImages();
+        for ($i = 0; $i < $nbr; ++$i) {
+            if (isset($images[$i])) {
+                $nImage[] = $images[$i];
+            } else {
+                $nImage[] = (new Image())->setPath(Image::PLACEHOLDER);
+            }
+        }
+
+        return $nImage;
+    }
+
+    /**
+     * @return array<int, Image>
+     */
+    public function get3Images()
+    {
+        return $this->getNImages(3);
+    }
+
+    /**
+     * @return array<int, Image>
+     */
+    public function get2Images()
+    {
+        return $this->getNImages(2);
+    }
+
+    /**
+     * @return array<int, Image>
+     */
+    public function get5Images()
+    {
+        return $this->getNImages(5);
     }
 
     public function numberOfDogs(): int

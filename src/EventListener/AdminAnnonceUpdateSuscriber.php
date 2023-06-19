@@ -7,7 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class AdminAnnonceUpdate implements EventSubscriberInterface
+class AdminAnnonceUpdateSuscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {

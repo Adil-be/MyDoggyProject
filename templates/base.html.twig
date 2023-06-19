@@ -61,6 +61,15 @@
                 </nav>
             </header>
         {% endblock header %}
+        {% block messages %}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endblock messages %}
         {# debut  body #}
         <main
             class="container">
@@ -68,4 +77,4 @@
             {% block body %}{% endblock %}
         </main>
     </body>
-</html>
+</html></body></html>
