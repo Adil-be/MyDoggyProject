@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AnnonceController extends AbstractController
 {
-    #[Route('/annonce{id}', name: 'annonce_detail')]
+    #[Route('/annonce/{id}', name: 'annonce_detail')]
     public function detail(Annonce $annonce): Response
     {
         return $this->render('annonce/detail.html.twig', [

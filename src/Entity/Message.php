@@ -30,6 +30,9 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private ?AdoptionOffer $adoptionOffer = null;
 
+    #[ORM\Column]
+    private ?bool $viewed = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,7 +62,7 @@ class Message
         return $this;
     }
 
-    public function isIsFromAdoptant(): ?bool
+    public function isFromAdoptant(): ?bool
     {
         return $this->isFromAdoptant;
     }
@@ -91,6 +94,18 @@ class Message
     public function setAdoptionOffer(?AdoptionOffer $adoptionOffer): self
     {
         $this->adoptionOffer = $adoptionOffer;
+
+        return $this;
+    }
+
+    public function isViewed(): ?bool
+    {
+        return $this->viewed;
+    }
+
+    public function setViewed(bool $viewed): self
+    {
+        $this->viewed = $viewed;
 
         return $this;
     }
