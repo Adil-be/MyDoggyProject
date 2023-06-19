@@ -39,22 +39,20 @@ class DogRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Dog[] Returns an array of Dog objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Dog
+    public function findWithAnnonceurId(int $annonceurId, int $dogId): ?Dog
+    {
+        $q = $this->createQueryBuilder('d');
+        $q->innerJoin('d.annonce', 'an')
+            ->innerJoin('an.annonceur', 'a')
+            ->andWhere('a.id = :annonceurId')
+            ->andWhere('d.id = :dogId')
+            ->setParameter('annonceurId', $annonceurId)
+            ->setParameter('dogId', $dogId);
+        return $q->getQuery()->getOneOrNullResult();
+    }
+
+    //    public function findOneBySomeField($value): ?Dog
 //    {
 //        return $this->createQueryBuilder('d')
 //            ->andWhere('d.exampleField = :val')
