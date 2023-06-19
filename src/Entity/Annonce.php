@@ -289,6 +289,20 @@ class Annonce
         return $adoptableDogs;
     }
 
+    public function getNbrUnreadMessage(): int
+    {
+        $nbrUnreadMessage = 0;
+        $adoptionOffers = $this->getAdoptionOffers();
+        foreach ($adoptionOffers as $adoptionOffer) {
+            $adoptionMessages = $adoptionOffer->getMessages()->filter(function ($m) {
+                return $m->isFromAdoptant() || $m->isViewed();
+            });
+            $nbrUnreadMessage += count($adoptionMessages);
+        }
+
+        return $nbrUnreadMessage;
+    }
+
     public function __toString()
     {
         return $this->getTitle();

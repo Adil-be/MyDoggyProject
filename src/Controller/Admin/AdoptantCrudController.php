@@ -25,7 +25,7 @@ class AdoptantCrudController extends AbstractCrudController
             TextField::new('username'),
             TextField::new('firstName'),
             TextField::new('lastName'),
-            CollectionField::new('adoptionOffers'),
+            CollectionField::new('adoptionOffers')->allowAdd(true)->allowDelete(true),
             TextField::new('password')->onlyOnForms(),
             TextField::new('phoneNumber')->onlyOnForms(),
             TextField::new('city')->onlyOnForms(),
