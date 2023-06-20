@@ -27,9 +27,6 @@ class DefaultController extends AbstractController
             0
         );
         $annonceurs = $annonceurRepository->findByRecentAnnonce();
-        dump($annonceurs);
-
-        dump($annonces);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',

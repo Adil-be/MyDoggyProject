@@ -26,7 +26,8 @@ class DogCrudController extends AbstractCrudController
             TextEditorField::new('description'),
             TextEditorField::new('antecedant'),
             CollectionField::new('breeds')->allowAdd(true)->allowDelete(true)->renderExpanded(),
-            CollectionField::new('images')->allowAdd(true)->allowDelete(true)->renderExpanded(),
+            CollectionField::new('images')->allowAdd()
+                ->allowDelete(),
             AssociationField::new('annonce'),
             BooleanField::new('acceptAnimmals')->onlyOnForms(),
             BooleanField::new('isAdopted')->onlyOnForms(),
