@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Annonceur;
 use App\Entity\Annonce;
-use App\Repository\AnnonceurRepository;
 use App\Repository\DogRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,16 +15,14 @@ class AnnonceurController extends AbstractController
 {
     #[Route('/annonceur', name: 'app_annonceur')]
     #[Route('/annonceur/{idDog}', name: 'app_annonceur_adopted')]
-    public function index(Request $request, DogRepository $dogRepository, ?int $idDog = null): Response
+    public function index(Request $request, DogRepository $dogRepository, int $idDog = null): Response
     {
         $annonceur = $this->getUser();
-        if ($idDog != null) {
+        if (null != $idDog) {
             $dog = $dogRepository->findWithAnnonceurId($annonceur->getId(), $idDog);
             $dog->setIsAdopted(true);
             $dogRepository->save($dog, true);
         }
-
-
 
         return $this->render('annonceur/index.html.twig', [
             'controller_name' => 'AnnonceurController',

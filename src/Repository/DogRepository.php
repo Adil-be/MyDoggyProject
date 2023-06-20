@@ -39,7 +39,6 @@ class DogRepository extends ServiceEntityRepository
         }
     }
 
-
     public function findWithAnnonceurId(int $annonceurId, int $dogId): ?Dog
     {
         $q = $this->createQueryBuilder('d');
@@ -49,6 +48,7 @@ class DogRepository extends ServiceEntityRepository
             ->andWhere('d.id = :dogId')
             ->setParameter('annonceurId', $annonceurId)
             ->setParameter('dogId', $dogId);
+
         return $q->getQuery()->getOneOrNullResult();
     }
 
