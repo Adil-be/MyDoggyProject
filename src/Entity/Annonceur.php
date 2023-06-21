@@ -16,7 +16,7 @@ class Annonceur extends User
     /**
      * @var Collection<int, Annonce>
      */
-    #[ORM\OneToMany(mappedBy: 'annonceur', targetEntity: Annonce::class)]
+    #[ORM\OneToMany(mappedBy: 'annonceur', targetEntity: Annonce::class, cascade: ['persist'])]
     private Collection $annonces;
 
     public function __construct()

@@ -29,3 +29,6 @@ stan:
 	composer analyse
 
 check:fixer stan
+
+form:
+	$(SYMFONY_CONSOLES) make:form

@@ -18,7 +18,7 @@
             class="text-center">
             {# the user must be a registered adoptant before applyon for adoption #}
             {% if is_granted('ROLE_ADOPTANT') %}
-                <a href="{{path('adoptant_applyForAdoption')}}" class="btn btn-outline-primary">Apply for adoption</a>
+                <a href="{{path('app_adoption_apply',{'id': annonce.getId})}}" class="btn btn-outline-primary">Apply for adoption</a>
             {% else %}
                 <p>you need to be register as an adoptant to apply for adoption
                     <br><a href="{{path('security_login')}}" class="btn btn-outline-primary">loggin</a>
