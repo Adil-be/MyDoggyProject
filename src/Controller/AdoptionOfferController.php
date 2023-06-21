@@ -72,6 +72,7 @@ class AdoptionOfferController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADOPTANT')]
     #[Route('/adoption/{id}/modify', name: 'app_adoption_modify')]
     public function modifyAdoption(Request $request, AdoptionOfferRepository $adoptionOfferRepository, AdoptionOffer $adoptionOffer): Response
     {
