@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MessageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
@@ -15,9 +16,23 @@ class Message
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: 'Your subject must be at least {{ limit }} characters long',
+        maxMessage: 'Your subject cannot be longer than {{ limit }} characters',
+    )]
     private ?string $subject = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 100,
+        max: 12000,
+        minMessage: 'the content must be at least {{ limit }} characters long',
+        maxMessage: 'the content name cannot be longer than {{ limit }} characters',
+    )]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -31,7 +46,7 @@ class Message
     private ?AdoptionOffer $adoptionOffer = null;
 
     #[ORM\Column]
-    private ?bool $viewed = null;
+    private ?bool $viewed = false;
 
     public function getId(): ?int
     {

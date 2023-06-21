@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DogRepository::class)]
 class Dog
@@ -17,12 +18,25 @@ class Dog
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(
+        min: 10,
+        max: 255,
+        minMessage: 'the description must be at least {{ limit }} characters long',
+        maxMessage: 'the description cannot be longer than {{ limit }} characters',
+    )]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(
+        min: 10,
+        max: 100,
+        minMessage: 'the description must be at least {{ limit }} characters long',
+        maxMessage: 'the description cannot be longer than {{ limit }} characters',
+    )]
     private ?string $antecedant = null;
 
     #[ORM\Column]
@@ -34,13 +48,13 @@ class Dog
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(mappedBy: 'dog', targetEntity: Image::class)]
+    #[ORM\OneToMany(mappedBy: 'dog', targetEntity: Image::class, cascade: ['persist', 'remove'])]
     private Collection $images;
 
     /**
      * @var Collection<int, Breed>
      */
-    #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'dogs')]
+    #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'dogs', cascade: ['persist'])]
     private Collection $breeds;
 
     #[ORM\ManyToOne(inversedBy: 'dogs')]

@@ -6,6 +6,7 @@ use App\Repository\AdoptionOfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdoptionOfferRepository::class)]
 class AdoptionOffer
@@ -19,7 +20,7 @@ class AdoptionOffer
     private ?\DateTimeImmutable $CreatedAt = null;
 
     #[ORM\Column]
-    private ?bool $isAccepted = null;
+    private ?bool $isAccepted = false;
 
     #[ORM\ManyToOne(inversedBy: 'adoptionOffers')]
     #[ORM\JoinColumn(nullable: false)]
@@ -28,16 +29,18 @@ class AdoptionOffer
     /**
      * @var Collection<int, Dog>
      */
-    #[ORM\ManyToMany(targetEntity: Dog::class, inversedBy: 'adoptionOffers')]
+    #[ORM\ManyToMany(targetEntity: Dog::class, inversedBy: 'adoptionOffers', cascade: ['persist'])]
     private Collection $dogs;
 
     /**
      * @var Collection<int, Message>
      */
-    #[ORM\OneToMany(mappedBy: 'adoptionOffer', targetEntity: Message::class)]
+    #[ORM\OneToMany(mappedBy: 'adoptionOffer', targetEntity: Message::class, cascade: ['persist', 'remove'])]
+    #[Assert\Valid]
     private Collection $messages;
 
     #[ORM\ManyToOne(inversedBy: 'adoptionOffers')]
+    #[Assert\Valid]
     private ?Adoptant $adoptant = null;
 
     public function __construct()
@@ -63,7 +66,7 @@ class AdoptionOffer
         return $this;
     }
 
-    public function isIsAccepted(): ?bool
+    public function isAccepted(): ?bool
     {
         return $this->isAccepted;
     }
@@ -151,5 +154,10 @@ class AdoptionOffer
         $this->adoptant = $adoptant;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return 'adoptionOffer';
     }
 }

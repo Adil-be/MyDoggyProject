@@ -22,6 +22,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     protected ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     protected ?string $email = null;
 
     /**
@@ -36,25 +40,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     protected ?string $password = null;
 
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Your username must be at least {{ limit }} characters long',
+        maxMessage: 'Your username cannot be longer than {{ limit }} characters',
+    )]
+    private ?string $username = null;
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'Your password must be at least {{ limit }} characters long',
+        maxMessage: 'Your password cannot be longer than {{ limit }} characters',
+    )]
     protected ?string $plainPassword;
 
     #[ORM\Column(length: 16, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(
+        min: 10,
+        max: 16,
+        minMessage: 'Your phoneNumber must be at least {{ limit }} characters long',
+        maxMessage: 'Your phoneNumber name cannot be longer than {{ limit }} characters',
+    )]
     protected ?string $phoneNumber = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 1,
+        max: 255,
+        minMessage: 'Your city must be at least {{ limit }} characters long',
+        maxMessage: 'Your city name cannot be longer than {{ limit }} characters',
+    )]
     protected ?string $city = null;
 
-    #[ORM\Column(length: 16, nullable: true)]
-    protected ?string $zipCode = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 6, nullable: true)]
+    #[Assert\NotBlank]
     #[Assert\Length(
-        min: 2,
-        max: 20,
-        minMessage: 'Your first name must be at least {{ limit }} characters long',
-        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+        min: 5,
+        max: 6,
+        minMessage: 'Your zipCode must be at least {{ limit }} characters long',
+        maxMessage: 'Your zipCode name cannot be longer than {{ limit }} characters',
     )]
-    private ?string $username = null;
+    protected ?string $zipCode = null;
 
     public function getId(): ?int
     {

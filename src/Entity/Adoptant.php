@@ -6,20 +6,23 @@ use App\Repository\AdoptantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdoptantRepository::class)]
 class Adoptant extends User
 {
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
     protected ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
     protected ?string $lastName = null;
 
     /**
      * @var Collection<int, AdoptionOffer>
      */
-    #[ORM\OneToMany(mappedBy: 'adoptant', targetEntity: AdoptionOffer::class)]
+    #[ORM\OneToMany(mappedBy: 'adoptant', targetEntity: AdoptionOffer::class, cascade: ['persist', 'remove'])]
     protected Collection $adoptionOffers;
 
     public function __construct()
@@ -89,5 +92,16 @@ class Adoptant extends User
         $roles[] = 'ROLE_ADOPTANT';
 
         return array_unique($roles);
+    }
+
+    public function hasAlreadyApply(Annonce $annonce): bool
+    {
+        foreach ($this->getAdoptionOffers() as $offer) {
+            if ($offer->getAnnonce() == $annonce) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
