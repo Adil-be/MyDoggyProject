@@ -36,6 +36,7 @@ class AdoptionOfferType extends AbstractType
                 },
             ])
             ->add('adoptant', AdoptantType::class, ['withPassword' => false]);
+        /** @var array<string, bool> $options */
         if ($options['isCreation']) {
             $builder->add('messages', CollectionType::class, [
                 'entry_type' => MessageType::class,
