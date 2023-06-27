@@ -12,8 +12,7 @@ class AnnonceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-        $isCreation = $options["isCreation"];
+        $isCreation = $options['isCreation'];
 
         $builder
             ->add('title')
@@ -21,10 +20,13 @@ class AnnonceType extends AbstractType
                 'entry_type' => DogType::class,
                 'entry_options' => [
                     'label' => false,
-                    'isCreation' => $isCreation
+                    'isCreation' => $isCreation,
                 ],
+                'by_reference' => false,
+                'prototype_name' => 'dogs',
                 'label' => 'Dogs',
                 'allow_add' => true,
+                'allow_delete' => true,
             ])
         ;
     }
@@ -33,7 +35,7 @@ class AnnonceType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Annonce::class,
-            'isCreation' => false
+            'isCreation' => false,
         ]);
     }
 }

@@ -17,8 +17,6 @@ class AdoptionOfferType extends AbstractType
     {
         $idAnnonce = $options['idAnnonce'];
         $builder
-            // ->add('CreatedAt', TextType::class)
-            // ->add('isAccepted')
             ->add('dogs', EntityType::class, [
                 // looks for choices from this entity
                 'class' => Dog::class,

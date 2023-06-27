@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ImageRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -19,7 +20,7 @@ class Image
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     protected ?string $path = null;
 
     #[ORM\Column(length: 255)]
@@ -29,11 +30,11 @@ class Image
     #[ORM\JoinColumn(nullable: false)]
     private ?Dog $dog = null;
 
-    #[Vich\UploadableField(mapping: 'dogImage', fileNameProperty: 'name', size: 'imageSize')]
+    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'path', size: 'size')]
     private ?File $file = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $size = null;
@@ -44,7 +45,7 @@ class Image
         if (null !== $file) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->updatedAt = new DateTimeImmutable();
         }
 
         return $this;
@@ -62,9 +63,10 @@ class Image
 
     public function getPath(): ?string
     {
-        $fullPath = self::FOLDER.$this->getDog()->getId().'/';
 
-        return $fullPath.$this->path;
+        $fullPath = self::FOLDER . $this->getDog()->getId() . '/';
+
+        return $fullPath . $this->path;
     }
 
     public function setPath(string $path): self

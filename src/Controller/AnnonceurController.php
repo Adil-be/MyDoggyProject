@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Annonce;
 use App\Entity\Annonceur;
 use App\Entity\Dog;
-use App\Form\AnnonceType;
 use App\Repository\DogRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +50,7 @@ class AnnonceurController extends AbstractController
         } else {
             throw $this->createAccessDeniedException("You don't have access!");
         }
-    } 
+    }
 
     #[Route('/annonce/{id}/adoptionOffer', name: 'annonce_adoption_offers')]
     public function annonceAdoptionOffers(Annonce $annonce): Response

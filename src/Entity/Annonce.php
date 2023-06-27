@@ -26,7 +26,7 @@ class Annonce
     private ?\DateTimeInterface $modifiedAt = null;
 
     #[ORM\Column]
-    private ?bool $isAvailable = null;
+    private ?bool $isAvailable = true;
 
     /**
      * @var Collection<int, Dog>

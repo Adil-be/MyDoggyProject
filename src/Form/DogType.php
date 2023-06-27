@@ -21,23 +21,33 @@ class DogType extends AbstractType
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('antecedant', TextareaType::class);
+        /** @var array<string, bool> $options */
         if (!$options['isCreation']) {
             $builder->add('isAdopted', CheckboxType::class);
         }
         $builder
-            ->add('acceptAnimmals', CheckboxType::class)
-            ->add('isLof', CheckboxType::class)
+            ->add('acceptAnimmals', CheckboxType::class, [
+                "required" => false
+            ])
+            ->add('isLof', CheckboxType::class, [
+                "required" => false
+            ])
             ->add('breeds', EntityType::class, [
                 'class' => Breed::class,
                 'multiple' => true,
                 'by_reference' => false,
                 'choice_label' => 'name',
+                'label' => 'breeds',
+
             ])
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class,
                 'entry_options' => ['label' => false],
+                'by_reference' => false,
                 'label' => 'Images',
-                'allow_add' => true
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype_name' => 'images',
             ])
         ;
     }
@@ -46,7 +56,7 @@ class DogType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Dog::class,
-            'isCreation' => false
+            'isCreation' => false,
         ]);
     }
 }

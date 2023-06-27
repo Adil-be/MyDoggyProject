@@ -40,7 +40,7 @@ class Dog
     private ?string $antecedant = null;
 
     #[ORM\Column]
-    private ?bool $isAdopted = null;
+    private ?bool $isAdopted = false;
 
     #[ORM\Column]
     private ?bool $acceptAnimmals = null;
@@ -48,7 +48,7 @@ class Dog
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(mappedBy: 'dog', targetEntity: Image::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'dog', targetEntity: Image::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
     /**
@@ -190,7 +190,7 @@ class Dog
         return $this;
     }
 
-    public function removeBreeds(Breed $breed): self
+    public function removeBreed(Breed $breed): self
     {
         if ($this->breeds->removeElement($breed)) {
             $breed->removeDog($this);

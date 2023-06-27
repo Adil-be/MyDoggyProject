@@ -32,3 +32,6 @@ check:fixer stan
 
 form:
 	$(SYMFONY_CONSOLES) make:form
+
+clear:
+	$(SYMFONY_CONSOLES) cache:pool:clear --all
