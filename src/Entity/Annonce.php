@@ -185,7 +185,7 @@ class Annonce
             }
         }
 
-        return (new Image())->setPath(Image::PLACEHOLDER);
+        return (new Image());
     }
 
     /**
@@ -216,7 +216,7 @@ class Annonce
             if (isset($images[$i])) {
                 $nImage[] = $images[$i];
             } else {
-                $nImage[] = (new Image())->setPath(Image::PLACEHOLDER);
+                $nImage[] = (new Image());
             }
         }
 

@@ -25,4 +25,4 @@ services:
     App\Namer\:
         resource: '../src/Namer'
         tags: ['namer.service_arguments']
-         public: true
+        public: true

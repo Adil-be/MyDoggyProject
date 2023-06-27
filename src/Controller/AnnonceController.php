@@ -29,8 +29,11 @@ class AnnonceController extends AbstractController
     #[IsGranted('ROLE_ANNONCEUR')]
     #[Route('/annonce/{id}/update', name: 'annonce_update')]
     #[Route('/annonce/new', name: 'annonce_new')]
-    public function annonceUpdate(Request $request, ?Annonce $annonce, AnnonceRepository $annonceRepository): Response
-    {
+    public function annonceUpdate(
+        Request $request,
+        ?Annonce $annonce,
+        AnnonceRepository $annonceRepository,
+    ): Response {
         /** @var Annonceur $annonceur */
         $annonceur = $this->getUser();
         $isCreation = false;

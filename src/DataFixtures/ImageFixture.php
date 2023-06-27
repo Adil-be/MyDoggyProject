@@ -21,14 +21,14 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
     {
         $dogs = $this->dogRepository->findAll();
         $fileSystem = new Filesystem();
-        $destination = __DIR__.'/../../public/images/dogImages/';
+        $destination = __DIR__.'/../../public/images/dogs/';
 
         // we delete the content of the $destination before uploading the images
         $succes = $this->deleteDir($destination);
 
         foreach ($dogs as $dog) {
-            $namefolder = $dog->getId();
-            $numberImage = mt_rand(1, 6);
+            // $namefolder = $dog->getId();
+            $numberImage = mt_rand(1, 4);
             $previousNum = [];
             for ($i = 1; $i <= $numberImage; ++$i) {
                 $rndNum = mt_rand(0, 40);
@@ -37,7 +37,8 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
                 }
                 $imageFile = $this->createImage($rndNum);
                 $previousNum[] = $rndNum;
-                $fileDestination = $destination.$namefolder;
+                // $fileDestination = $destination.$namefolder;
+                $fileDestination = $destination;
                 $fileSystem->copy(
                     $imageFile->getRealPath(),
                     $fileDestination.'/'.$imageFile->getFilename()

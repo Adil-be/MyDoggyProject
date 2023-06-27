@@ -13,7 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 class Image
 {
-    public const FOLDER = 'images/dogImages/';
+    public const FOLDER = 'images/dogs/';
     public const PLACEHOLDER = 'images/placeholder.jpg';
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -39,6 +39,7 @@ class Image
     #[ORM\Column(nullable: true)]
     private ?int $size = null;
 
+
     public function setFile(File|UploadedFile|null $file = null): self
     {
         $this->file = $file;
@@ -63,10 +64,18 @@ class Image
 
     public function getPath(): ?string
     {
+        // $d = $this->getDog();
+        // if (isset($d) && !is_null($d)) {
+        //     return self::FOLDER . $d->getId() . '/' . $this->path;
+        // } else {
+        //     return self::PLACEHOLDER;
+        // }
 
-        $fullPath = self::FOLDER . $this->getDog()->getId() . '/';
+        if (is_null($this->path)) {
+            return self::PLACEHOLDER;
+        }
 
-        return $fullPath . $this->path;
+        return self::FOLDER . $this->path;
     }
 
     public function setPath(string $path): self

@@ -25,8 +25,8 @@
 ###< friendsofphp/php-cs-fixer ###
 
 # Images 
-public/images/dogImages/*
-!public/images/dogImages/.gitignore
+public/images/dogs/*
+!public/images/dogs/.gitignore
 
 #ImageFixture
 
