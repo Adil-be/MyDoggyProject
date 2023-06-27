@@ -17,8 +17,6 @@ class AdoptionOfferType extends AbstractType
     {
         $idAnnonce = $options['idAnnonce'];
         $builder
-            // ->add('CreatedAt', TextType::class)
-            // ->add('isAccepted')
             ->add('dogs', EntityType::class, [
                 // looks for choices from this entity
                 'class' => Dog::class,
@@ -36,6 +34,7 @@ class AdoptionOfferType extends AbstractType
                 },
             ])
             ->add('adoptant', AdoptantType::class, ['withPassword' => false]);
+        /** @var array<string, bool> $options */
         if ($options['isCreation']) {
             $builder->add('messages', CollectionType::class, [
                 'entry_type' => MessageType::class,

@@ -40,7 +40,7 @@ class Dog
     private ?string $antecedant = null;
 
     #[ORM\Column]
-    private ?bool $isAdopted = null;
+    private ?bool $isAdopted = false;
 
     #[ORM\Column]
     private ?bool $acceptAnimmals = null;
@@ -190,7 +190,7 @@ class Dog
         return $this;
     }
 
-    public function removeBreeds(Breed $breed): self
+    public function removeBreed(Breed $breed): self
     {
         if ($this->breeds->removeElement($breed)) {
             $breed->removeDog($this);

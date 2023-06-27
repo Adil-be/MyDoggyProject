@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% form_theme form with [
+    'bootstrap_5_horizontal_layout.html.twig',
+    'forms/theme.html.twig'
+    ] %}
+
+    <div class="text-center p-3">
+        <h1>Create/Update Annonce</h1>
+    </div>
+
+    <h2>Form</h2>
+    <div class="form p-3 my-3">
+        {{form_start(form)}}
+
+        {{ form_errors(form) }}
+        {{ form_row(form.title) }}
+
+        <h3>Dogs</h3>
+        <h2>{{ form_label(form.dogs) }}</h2>
+        <button type="button" class="add_item_link btn btn-success" data-collection-holder-class="dogs">Add a dog</button>
+        <ul class="dogs" data-index="{{ form.dogs|length > 0 ? form.dogs|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.dogs.vars.prototype)|e('html_attr') }}" data-prototype-name="__{{ form.dogs.vars.name }}__" data-collection-holder>
+            {% for dogForm in form.dogs %}
+                <li data-collection-element>
+                    {{ form_widget(dogForm) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="button" class="add_item_link btn btn-success" data-collection-holder-class="dogs">Add dogs</button>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {{ form_end(form) }}
+
+
+    {% endblock body %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script defer src="{{asset('js/collectionClean.js')}}"></script>
+    {% endblock %}

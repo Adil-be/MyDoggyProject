@@ -52,18 +52,6 @@ class AnnonceurController extends AbstractController
         }
     }
 
-    #[Route('/annonce/{id}/update', name: 'annonce_update')]
-    #[Route('/annonce/new', name: 'annonce_new')]
-    public function annonceUpdate(): Response
-    {
-        $annonceur = $this->getUser();
-
-        return $this->render('annonceur/index.html.twig', [
-            'controller_name' => 'AnnonceurController',
-            'annonceur' => $annonceur,
-        ]);
-    }
-
     #[Route('/annonce/{id}/adoptionOffer', name: 'annonce_adoption_offers')]
     public function annonceAdoptionOffers(Annonce $annonce): Response
     {
