@@ -14,12 +14,9 @@ class DirectoryNamer implements DirectoryNamerInterface
 {
     /**
      * @param Image $object
-     * @param PropertyMapping $mapping
-     *
-     * @return string
      *
      * @throws \Exception
-     * 
+     *
      * @phpstan-ignore-next-line
      */
     public function directoryName($object, PropertyMapping $mapping): string
@@ -30,10 +27,10 @@ class DirectoryNamer implements DirectoryNamerInterface
 
         $dog = $object->getDog();
 
-        if ($dog === null) {
+        if (null === $dog) {
             throw new \Exception("Your image isn't linked to a dog!");
         }
 
-        return $dog->getId() . '/';
+        return $dog->getId().'/';
     }
 }

@@ -54,16 +54,16 @@ class AnnonceRepository extends ServiceEntityRepository
         if (!is_null($filter->getSearch())) {
             $likeStatement = $q->expr()->like('a.title', ':search');
             $q->andWhere($likeStatement);
-            $q->setParameter('search', '%' . $filter->getSearch() . '%');
+            $q->setParameter('search', '%'.$filter->getSearch().'%');
         }
         if (!is_null($filter->getAnnonceurs())) {
             $orStatementsAnnonceur = $q->expr()->orX();
             foreach ($filter->getAnnonceurs() as $key => $annonceur) {
                 $id = $annonceur->getId();
                 $orStatementsAnnonceur->add(
-                    $q->expr()->eq('asso.id', ':idAsso' . $key)
+                    $q->expr()->eq('asso.id', ':idAsso'.$key)
                 );
-                $q->setParameter('idAsso' . $key, $id);
+                $q->setParameter('idAsso'.$key, $id);
             }
             $q->andWhere($orStatementsAnnonceur);
         }
@@ -75,9 +75,9 @@ class AnnonceRepository extends ServiceEntityRepository
             foreach ($filter->getBreeds() as $key => $breed) {
                 $id = $breed->getId();
                 $orStatementsBreeds->add(
-                    $q->expr()->eq('b.id', ':idBreed' . $key)
+                    $q->expr()->eq('b.id', ':idBreed'.$key)
                 );
-                $q->setParameter('idBreed' . $key, $id);
+                $q->setParameter('idBreed'.$key, $id);
             }
             $q->andWhere($orStatementsBreeds);
         }
