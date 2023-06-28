@@ -79,7 +79,6 @@ class AnnonceController extends AbstractController
         Request $request,
     ): Response {
         $annonceFilter = new AnnonceFilter();
-        dump($annonceFilter);
 
         $form = $this->createForm(AnnonceFilterType::class, $annonceFilter);
         $annonces = $annonceRepository->findBy(
