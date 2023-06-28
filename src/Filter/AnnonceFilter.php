@@ -51,11 +51,20 @@ class AnnonceFilter
         return $this;
     }
 
+
+    /**
+     * @return Collection<int, Annonceur>
+     */
     public function getAnnonceurs(): ?Collection
     {
         return $this->annonceurs;
     }
 
+
+    /**
+     * @param Collection<int, Annonceur> $annonceurs
+     * @return self
+     */
     public function setAnnonceurs(?Collection $annonceurs): self
     {
         $this->annonceurs = $annonceurs;
@@ -63,11 +72,18 @@ class AnnonceFilter
         return $this;
     }
 
+    /**
+     * @return Collection<int, Breed>
+     */
     public function getBreeds(): ?Collection
     {
         return $this->breeds;
     }
 
+    /**
+     * @param Collection<int, Breed> $breeds
+     * @return self
+     */
     public function setBreeds(?Collection $breeds): self
     {
         $this->breeds = $breeds;
