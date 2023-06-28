@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DefaultController!
+{% endblock %}
+
+{% form_theme form with [
+    'forms/filter_horizontal.html.twig'
+    ] %}
+{% block body %}
+    <section class="mt-5">
+        <h2 class="text-center">Toutes les annonces</h2>
+        <div class="filter">
+            {{form_start(form)}}
+            <div class="d-flex gap-3 flex-row align-items-center">
+                {{form_row(form.annonceurs)}}
+                {{form_row(form.breeds)}}
+                {{form_row(form.isLof)}}
+                {{form_row(form.search)}}
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+
+            {{form_end(form)}}
+        </div>
+        <div class="row mt-5">
+            {% for annonce in annonces %}
+                {% include "includes/_annonce.html.twig" with {'annonce': annonce} only %}
+            {% endfor %}
+        </div>
+    </section>
+{% endblock body %}
