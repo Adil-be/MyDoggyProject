@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ImageRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -34,11 +33,10 @@ class Image
     private ?File $file = null;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $size = null;
-
 
     public function setFile(File|UploadedFile|null $file = null): self
     {
@@ -46,7 +44,7 @@ class Image
         if (null !== $file) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new DateTimeImmutable();
+            $this->updatedAt = new \DateTimeImmutable();
         }
 
         return $this;
@@ -75,7 +73,7 @@ class Image
             return self::PLACEHOLDER;
         }
 
-        return self::FOLDER . $this->path;
+        return self::FOLDER.$this->path;
     }
 
     public function setPath(string $path): self

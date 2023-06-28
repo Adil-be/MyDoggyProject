@@ -27,10 +27,10 @@ class DogType extends AbstractType
         }
         $builder
             ->add('acceptAnimmals', CheckboxType::class, [
-                "required" => false
+                'required' => false,
             ])
             ->add('isLof', CheckboxType::class, [
-                "required" => false
+                'required' => false,
             ])
             ->add('breeds', EntityType::class, [
                 'class' => Breed::class,
@@ -38,7 +38,6 @@ class DogType extends AbstractType
                 'by_reference' => false,
                 'choice_label' => 'name',
                 'label' => 'breeds',
-
             ])
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class,

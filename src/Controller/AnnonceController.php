@@ -6,9 +6,10 @@ use App\Entity\Annonce;
 use App\Entity\Annonceur;
 use App\Entity\Dog;
 use App\Entity\Image;
+use App\Filter\AnnonceFilter;
 use App\Form\AnnonceType;
+use App\Form\Filter\AnnonceFilterType;
 use App\Repository\AnnonceRepository;
-use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,10 +56,9 @@ class AnnonceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->addFlash('success', 'Annonce crée !');
 
-            $t = new DateTimeImmutable();
+            $t = new \DateTimeImmutable();
             $annonce->setCreatedAt($t)->setModifiedAt($t);
 
             $annonceRepository->save($annonce, true);
@@ -69,6 +69,31 @@ class AnnonceController extends AbstractController
         return $this->render('annonce/annonceUpdate.html.twig', [
             'controller_name' => 'AnnonceurController',
             'annonceur' => $annonceur,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/listAnnonces', name: 'annonce_listAnnonce')]
+    public function listAnnonce(
+        AnnonceRepository $annonceRepository,
+        Request $request,
+    ): Response {
+        $annonceFilter = new AnnonceFilter();
+
+        $form = $this->createForm(AnnonceFilterType::class, $annonceFilter);
+        $annonces = $annonceRepository->findBy(
+            ['isAvailable' => true]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $annonces = $annonceRepository->findBySomeFilter($annonceFilter);
+        }
+
+        return $this->render('annonce/listAnnonces.html.twig', [
+            'controller_name' => 'AnnonceurController',
+            'annonces' => $annonces,
             'form' => $form->createView(),
         ]);
     }

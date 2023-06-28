@@ -185,7 +185,7 @@ class Annonce
             }
         }
 
-        return (new Image());
+        return new Image();
     }
 
     /**
