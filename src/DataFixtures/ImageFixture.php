@@ -32,9 +32,9 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
             $previousNum = [];
             for ($i = 1; $i <= $numberImage; ++$i) {
                 $rndNum = mt_rand(0, 40);
-                while (in_array($rndNum, $previousNum, true)) {
+                do {
                     $rndNum = mt_rand(0, 40);
-                }
+                } while (in_array($rndNum, $previousNum, true));
                 $imageFile = $this->createImage($rndNum);
                 $previousNum[] = $rndNum;
                 // $fileDestination = $destination.$namefolder;
@@ -86,7 +86,10 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
 
     public function deleteDir(string $dir): bool
     {
-        $files = array_diff(scandir($dir), ['.', '..']);
+        $files = [];
+        if (false !== scandir($dir)) {
+            $files = array_diff(scandir($dir), ['.', '..']);
+        }
 
         foreach ($files as $file) {
             (is_dir("$dir/$file")) ? $this->deleteDir("$dir/$file") : unlink("$dir/$file");
