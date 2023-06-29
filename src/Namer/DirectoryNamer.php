@@ -13,7 +13,11 @@ use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
 class DirectoryNamer implements DirectoryNamerInterface
 {
     /**
+     * 
      * @param Image $object
+     * @param PropertyMapping $mapping
+     * 
+     * @return string
      *
      * @throws \Exception
      *
@@ -31,6 +35,6 @@ class DirectoryNamer implements DirectoryNamerInterface
             throw new \Exception("Your image isn't linked to a dog!");
         }
 
-        return $dog->getId().'/';
+        return $dog->getId() . '/';
     }
 }

@@ -5,14 +5,25 @@ namespace App\DataFixtures;
 use App\Entity\Breed;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class BreedFixture extends Fixture
 {
+    /**
+     * @var  HttpClientInterface $client
+     */
+    private $client;
+
+    public function __construct(HttpClientInterface $client)
+    {
+        $this->client = $client;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $breedDataAll = json_decode(file_get_contents('https://dogapi.dog/api/v2/breeds'), true);
+        $breedDataAll = $this->getBreeds();
         $breedData = $breedDataAll['data'];
-        for ($i = 0; $i < 10; ++$i) {
+        for ($i = 0; $i < 15; ++$i) {
             $name = $breedData[$i]['attributes']['name'];
             $description = $breedData[$i]['attributes']['description'];
             $breed = new Breed();
@@ -23,5 +34,18 @@ class BreedFixture extends Fixture
         }
 
         $manager->flush();
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getBreeds()
+    {
+        $response = $this->client->request(
+            'GET',
+            'https://dogapi.dog/api/v2/breeds'
+        );
+
+        return $response->toArray();
     }
 }

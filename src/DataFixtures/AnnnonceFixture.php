@@ -7,6 +7,7 @@ use App\Repository\AnnonceurRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class AnnnonceFixture extends Fixture implements DependentFixtureInterface
 {
@@ -16,17 +17,17 @@ class AnnnonceFixture extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        require_once 'vendor/autoload.php';
+        $faker = Factory::create('fr_FR');
         // Fixture Annonce
         $annonceurs = $this->annonceurRepository->findAll();
-        for ($i = 1; $i < 5; ++$i) {
-            $titleData = json_decode(file_get_contents('https://jsonplaceholder.typicode.com/posts/'.$i), true);
-            $title = $titleData['title'];
+        for ($i = 1; $i < 10; ++$i) {
             $randAnnonceur = mt_rand(0, count($annonceurs) - 1);
             $annonce = new Annonce();
             $date = new \DateTimeImmutable();
             $annonce
                 ->setIsAvailable(true)
-                ->setTitle($title)
+                ->setTitle($faker->sentence())
                 ->setAnnonceur($annonceurs[$randAnnonceur])
                 ->setCreatedAt($date)
                 ->setModifiedAt($date);

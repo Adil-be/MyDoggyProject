@@ -7,19 +7,28 @@ use App\Entity\Adoptant;
 use App\Entity\Annonceur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class UserFixture extends Fixture
 {
     private UserPasswordHasherInterface $hasher;
 
-    public function __construct(UserPasswordHasherInterface $hasher)
-    {
+    private HttpClientInterface $client;
+
+    public function __construct(
+        UserPasswordHasherInterface $hasher,
+        HttpClientInterface $client
+    ) {
         $this->hasher = $hasher;
+        $this->client = $client;
     }
 
     public function load(ObjectManager $manager): void
     {
+        require_once 'vendor/autoload.php';
+        $faker = Factory::create('fr_FR');
         // fixture Admin
 
         $admin = new Admin();
@@ -38,23 +47,16 @@ class UserFixture extends Fixture
         $manager->persist($admin);
 
         // Fixtures Adoptant
-        $usersData = json_decode(file_get_contents('https://jsonplaceholder.typicode.com/users'), true);
-
-        for ($i = 0; $i < 5; ++$i) {
-            $userData = $usersData[$i];
+        for ($i = 0; $i < 7; ++$i) {
             $adoptant = new Adoptant();
-
-            $fullname = explode(' ', $userData['name']);
-            $firstName = $fullname[0];
-            $lastName = $fullname[1];
             $adoptant
-                ->setUsername($userData['username'])
-                ->setEmail($userData['email'])
-                ->setCity($userData['address']['city'])
-                ->setPhoneNumber($userData['phone'])
-                ->setZipCode($userData['address']['zipcode']);
-            $adoptant->setFirstName($firstName)
-                ->setLastName($lastName);
+                ->setUsername($faker->userName())
+                ->setEmail($faker->email())
+                ->setCity($faker->city())
+                ->setPhoneNumber($faker->phoneNumber())
+                ->setZipCode($faker->postcode());
+            $adoptant->setFirstName($faker->firstName())
+                ->setLastName($faker->lastName());
             $adoptant->setPassword(
                 $this->hasher->hashPassword(
                     $adoptant,
@@ -72,17 +74,15 @@ class UserFixture extends Fixture
                 ['assocName' => 'PAAW', 'email' => 'PAAW@gmail.com'],
                 ['assocName' => 'PetAdoption', 'email' => 'PetAdoption@gmail.com'],
             ];
-        for ($i = 5; $i < 10; ++$i) {
-            $userData = $usersData[$i];
+        foreach ($assocData as $assoc) {
             $annonceur = new Annonceur();
-
             $annonceur
-                ->setUsername($userData['username'])
-                ->setEmail($assocData[$i - 5]['email'])
-                ->setCity($userData['address']['city'])
-                ->setPhoneNumber($userData['phone'])
-                ->setZipCode($userData['address']['zipcode']);
-            $annonceur->setName($assocData[$i - 5]['assocName']);
+                ->setUsername($faker->userName())
+                ->setEmail($assoc['email'])
+                ->setCity($faker->city())
+                ->setPhoneNumber($faker->phoneNumber())
+                ->setZipCode($faker->postcode());
+            $annonceur->setName($assoc['assocName']);
             $annonceur->setPassword(
                 $this->hasher->hashPassword(
                     $annonceur,
@@ -92,5 +92,19 @@ class UserFixture extends Fixture
             $manager->persist($annonceur);
         }
         $manager->flush();
+    }
+
+    /**
+     * 
+     * @return array<string, mixed>
+     */
+    public function getUsers()
+    {
+        $response = $this->client->request(
+            'GET',
+            'https://jsonplaceholder.typicode.com/users'
+        );
+
+        return $response->toArray();
     }
 }

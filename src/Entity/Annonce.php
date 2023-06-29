@@ -277,7 +277,7 @@ class Annonce
     }
 
     /**
-     * @return Collection<int, Dog>
+     * @return \Doctrine\Common\Collections\ReadableCollection<int, Dog>
      */
     public function getAdoptableDog()
     {
