@@ -21,7 +21,7 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
     {
         $dogs = $this->dogRepository->findAll();
         $fileSystem = new Filesystem();
-        $destination = __DIR__ . '/../../public/images/dogs/';
+        $destination = __DIR__.'/../../public/images/dogs/';
 
         // we delete the content of the $destination before uploading the images
         $succes = $this->deleteDir($destination);
@@ -41,7 +41,7 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
                 $fileDestination = $destination;
                 $fileSystem->copy(
                     $imageFile->getRealPath(),
-                    $fileDestination . '/' . $imageFile->getFilename()
+                    $fileDestination.'/'.$imageFile->getFilename()
                 );
 
                 $image = new Image();
@@ -67,9 +67,9 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
 
     public function createImage(int $rndNum): UploadedFile
     {
-        $folder = __DIR__ . '/../../var/images/';
-        $imageName = 'dog' . $rndNum . '.jpg';
-        $src = $folder . $imageName;
+        $folder = __DIR__.'/../../var/images/';
+        $imageName = 'dog'.$rndNum.'.jpg';
+        $src = $folder.$imageName;
 
         return new UploadedFile(
             path: $src,
@@ -87,7 +87,7 @@ class ImageFixture extends Fixture implements DependentFixtureInterface
     public function deleteDir(string $dir): bool
     {
         $files = [];
-        if (scandir($dir) !== false) {
+        if (false !== scandir($dir)) {
             $files = array_diff(scandir($dir), ['.', '..']);
         }
 

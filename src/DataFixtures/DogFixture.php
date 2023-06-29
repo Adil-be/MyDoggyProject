@@ -36,7 +36,7 @@ class DogFixture extends Fixture implements DependentFixtureInterface
                 ->setIsLof($faker->boolean());
 
             $randnb = mt_rand(1, 2);
-            for ($x = 0; $x <= $randnb; $x++) {
+            for ($x = 0; $x <= $randnb; ++$x) {
                 $randomNumber = mt_rand(0, count($breeds) - 1);
                 $breed = $breeds[$randomNumber];
                 $dog->addBreed($breed);

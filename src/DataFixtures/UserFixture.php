@@ -95,7 +95,6 @@ class UserFixture extends Fixture
     }
 
     /**
-     * 
      * @return array<string, mixed>
      */
     public function getUsers()

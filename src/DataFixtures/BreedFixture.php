@@ -10,7 +10,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class BreedFixture extends Fixture
 {
     /**
-     * @var  HttpClientInterface $client
+     * @var HttpClientInterface
      */
     private $client;
 

@@ -8,7 +8,6 @@ use App\Repository\AdoptantRepository;
 use App\Repository\AnnonceRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
@@ -29,7 +28,6 @@ class AdoptionOfferFixture extends Fixture implements DependentFixtureInterface
         $adoptants = $this->adoptantRepository->findAll();
 
         foreach ($annonces as $annonce) {
-
             $dogs = $annonce->getDogs();
             $nbrOffer = mt_rand(0, 2);
 
@@ -37,23 +35,22 @@ class AdoptionOfferFixture extends Fixture implements DependentFixtureInterface
             $adoptantsIds = [];
 
             // AdoptionOffers
-            for ($i = 0; $i < $nbrOffer; $i++) {
-                $adoptionOffer = new AdoptionOffer;
+            for ($i = 0; $i < $nbrOffer; ++$i) {
+                $adoptionOffer = new AdoptionOffer();
                 $adoptionOffer->setAnnonce($annonce)
-                    ->setCreatedAt(new \DateTimeImmutable);
+                    ->setCreatedAt(new \DateTimeImmutable());
                 // message adoptionOffer
-                $message = (new Message)
+                $message = (new Message())
                     ->setContent($faker->paragraph())
                     ->setSubject($faker->sentence())
                     ->setIsFromAdoptant(true)
-                    ->setCreatedAt(new \DateTimeImmutable);
+                    ->setCreatedAt(new \DateTimeImmutable());
                 $adoptionOffer->addMessage($message);
 
                 // on ne veux pas qu'un adoptant postule plusieur fois pour la meme annonce
                 do {
                     $adoptantId = mt_rand(0, count($adoptants) - 1);
-                } while (in_array($adoptantId, $adoptantsIds));
-
+                } while (in_array($adoptantId, $adoptantsIds, true));
 
                 $adoptantsIds[] = $adoptantId;
 
@@ -68,12 +65,12 @@ class AdoptionOfferFixture extends Fixture implements DependentFixtureInterface
                 // pour pouvoir retenir nos dogs
                 $dogIds = [];
 
-                for ($y = 0; $y < $nbrDogsInOffer; $y++) {
-
+                for ($y = 0; $y < $nbrDogsInOffer; ++$y) {
                     // on ne veux pas ajoute le meme dog plusieurs fois pour la meme demande Adoption
                     do {
                         $dogId = mt_rand(0, count($dogs) - 1);
-                    } while (in_array($dogId, $dogIds));
+                    } while (in_array($dogId, $dogIds, true));
+                    $dogIds[] = $dogId;
 
                     $dog = $dogs[$dogId];
                     $adoptionOffer->addDog($dog);
