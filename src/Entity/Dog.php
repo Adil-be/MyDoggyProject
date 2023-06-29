@@ -257,7 +257,6 @@ class Dog
 
     public function getFirstImage(): Image
     {
-
         return $this->getImages()[0];
     }
 }

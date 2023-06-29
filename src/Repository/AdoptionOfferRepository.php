@@ -45,7 +45,7 @@ class AdoptionOfferRepository extends ServiceEntityRepository
     public function findByAdoptantId(int $id): array
     {
         return $this->createQueryBuilder('a')
-            ->join("a.adoptant", "u")
+            ->join('a.adoptant', 'u')
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
             ->orderBy('a.createdAt', 'DESC')
