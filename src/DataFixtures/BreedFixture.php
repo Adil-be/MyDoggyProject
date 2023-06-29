@@ -22,8 +22,9 @@ class BreedFixture extends Fixture
     public function load(ObjectManager $manager): void
     {
         $breedDataAll = $this->getBreeds();
+        // dd($breedDataAll);
         $breedData = $breedDataAll['data'];
-        for ($i = 0; $i < 15; ++$i) {
+        for ($i = 0; $i < 9; ++$i) {
             $name = $breedData[$i]['attributes']['name'];
             $description = $breedData[$i]['attributes']['description'];
             $breed = new Breed();

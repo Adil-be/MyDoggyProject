@@ -14,14 +14,13 @@ class AnnnonceFixture extends Fixture implements DependentFixtureInterface
     public function __construct(protected AnnonceurRepository $annonceurRepository)
     {
     }
-
     public function load(ObjectManager $manager): void
     {
         require_once 'vendor/autoload.php';
         $faker = Factory::create('fr_FR');
         // Fixture Annonce
         $annonceurs = $this->annonceurRepository->findAll();
-        for ($i = 1; $i < 10; ++$i) {
+        for ($i = 0; $i < 10; $i++) {
             $randAnnonceur = mt_rand(0, count($annonceurs) - 1);
             $annonce = new Annonce();
             $date = new \DateTimeImmutable();
