@@ -1,0 +1,49 @@
+<div class="card my-5">
+    <div class="card-body">
+        <h3 class="card-title">
+            Adoption offer n°{{adoptionOffer.getId}}</h3>
+        <div>
+            <h5 class="card-title">Annonce concerné :
+                {{adoptionOffer.getAnnonce}}</h5>
+            <a class="btn btn-primary" href="{{path('annonce_detail',{'id' : adoptionOffer.getAnnonce.getId})}}" target="_blank" class="card-link">Details</a>
+        </div>
+        <h5 class="card-title">Annonceur :
+            {{adoptionOffer.getAnnonce.getAnnonceur}}</h5>
+        <p class="card-text">
+            <small class="text-body-secondary">last modified :
+                {{adoptionOffer.getAnnonce.getModifiedAt|format_datetime()}}</small>
+        </p>
+        <h5 class="card-title">list Dogs :</h5>
+        <ul class="row">
+            {% for dog in adoptionOffer.getDogs %}
+                <li class="col-md-3 p-3">
+                    <p>Name:
+                        {{dog.getName}}
+                        {% if dog.isAdopted %}
+                            <span class="badge rounded-pill text-bg-danger">is Adopted</span>
+                        </p>
+                        <img src="{{asset(dog.getFirstImage.getPath)}}" alt="" class="m-2 w-100" style="aspect-ratio:1">
+                    {% else %}
+                        <span class="badge rounded-pill text-bg-warning">Still pending</span>
+                    {% endif %}
+                    <img src="{{asset(dog.getFirstImage.getPath)}}" alt="" class="w-100 m-2" style="aspect-ratio:1">
+                </li>
+            {% endfor %}
+            {# end for #}
+        </ul>
+        {# link #}
+        <div class="text-center">
+            <a class="btn btn-primary" href="{{path('annonce_detail',{'id' : adoptionOffer.getAnnonce.getId})}}" target="_blank" class="card-link">Details</a>
+            <a class="btn btn-primary position-relative" href="{{path('annonce_adoption_offers',{id:adoptionOffer.getAnnonce.getId })}}">
+                Inbox
+                {% if adoptionOffer.getAnnonce.getNbrUnreadMessage != 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{adoptionOffer.getAnnonce.getNbrUnreadMessage}}+
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                {% endif %}
+            </a>
+        </div>
+        {# end link #}
+    </div>
+</div>

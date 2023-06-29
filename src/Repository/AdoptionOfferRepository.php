@@ -39,22 +39,22 @@ class AdoptionOfferRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return AdoptionOffer[] Returns an array of AdoptionOffer objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return AdoptionOffer[] Returns an array of AdoptionOffer objects
+     */
+    public function findByAdoptantId(int $id): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join("a.adoptant", "u")
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('a.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-//    public function findOneBySomeField($value): ?AdoptionOffer
+    //    public function findOneBySomeField($value): ?AdoptionOffer
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

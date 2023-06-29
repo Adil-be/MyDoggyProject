@@ -60,7 +60,7 @@ class AdoptionOfferFixture extends Fixture implements DependentFixtureInterface
                 // Dogs de l'adoptionOffer
 
                 // nbr of dog dans la demande d'adoption
-                $nbrDogsInOffer = mt_rand(0, count($dogs) - 1);
+                $nbrDogsInOffer = mt_rand(1, count($dogs));
 
                 // pour pouvoir retenir nos dogs
                 $dogIds = [];

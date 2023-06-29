@@ -28,17 +28,20 @@
                         </p>
                     {% else %}
                         <span class="badge rounded-pill text-bg-warning">Still pending</span>
-                    </p>
-                    <a class="btn btn-success" href="{{path('app_annonceur_adopted', {'id': dog.getId})}}">Mark as adopted</a>
-                {% endif %}
-            </li>
-        {% endfor %}
-        {# end for #}
-    </ul>
-    {# link #}
-    <div class="text-center">
-        <a class="btn btn-primary" href="{{path('annonce_detail',{'id' : annonce.getId})}}" target="_blank" class="card-link">Details</a>
-        <a class="btn btn-primary" href="{{path('annonce_update',{'id' : annonce.getId})}}" target="_blank" class="card-link">Modify</a>
+                    {% endif %}
+                    <img src="{{asset(dog.getFirstImage.getPath)}}" alt="" class="m-2 w-100" style="aspect-ratio:1">
+                    {% if not dog.isAdopted %}
+                        <a class="btn btn-success" href="{{path('app_annonceur_adopted', {'id': dog.getId})}}">Mark as adopted</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            {# end for #}
+        </ul>
+        {# link #}
+        <div class="text-center">
+            <a class="btn btn-primary" href="{{path('annonce_detail',{'id' : annonce.getId})}}" target="_blank" class="card-link">Details</a>
+            <a class="btn btn-primary" href="{{path('annonce_update',{'id' : annonce.getId})}}" target="_blank" class="card-link">Modify</a>
+        </div>
+        {# end link #}
     </div>
-    {# end link #}
-</div></div>
+</div>
