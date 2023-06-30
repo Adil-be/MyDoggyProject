@@ -29,7 +29,12 @@ class AdoptionOfferFixture extends Fixture implements DependentFixtureInterface
 
         foreach ($annonces as $annonce) {
             $dogs = $annonce->getDogs();
-            $nbrOffer = mt_rand(0, 2);
+
+            $nbrOfferMax = 3;
+            if ($nbrOfferMax > count($adoptants)) {
+                $nbrOfferMax = count($adoptants);
+            }
+            $nbrOffer = mt_rand(0, $nbrOfferMax);
 
             // pour pouvoir retenir nos adoptants
             $adoptantsIds = [];
@@ -60,7 +65,7 @@ class AdoptionOfferFixture extends Fixture implements DependentFixtureInterface
                 // Dogs de l'adoptionOffer
 
                 // nbr of dog dans la demande d'adoption
-                $nbrDogsInOffer = mt_rand(0, count($dogs) - 1);
+                $nbrDogsInOffer = mt_rand(1, count($dogs));
 
                 // pour pouvoir retenir nos dogs
                 $dogIds = [];

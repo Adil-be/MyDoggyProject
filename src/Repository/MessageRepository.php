@@ -39,7 +39,7 @@ class MessageRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
+    //    /**
 //     * @return Message[] Returns an array of Message objects
 //     */
 //    public function findByExampleField($value): array
@@ -53,14 +53,19 @@ class MessageRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
-//    public function findOneBySomeField($value): ?Message
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @return Message[] Returns an array of Message objects
+     */
+    public function findFirstMessageForm(int $id): array
+    {
+        return $this->createQueryBuilder('m')
+            ->join('m.adoptionOffer', 'a')
+            ->andWhere('a.id = :id')
+            ->orderBy('m.createdAt', 'ASC')
+            ->setParameter('id', $id)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

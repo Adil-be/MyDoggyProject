@@ -10,7 +10,7 @@ db.create:
 	$(SYMFONY_CONSOLES) doctrine:database:create --if-not-exists
 
 db.drop:
-	$(SYMFONY_CONSOLES) doctrine:database:drop --force --if-exists
+	$(SYMFONY_CONSOLES) doctrine:database:drop --force
 
 migration:
 	$(SYMFONY_CONSOLES) make:migration

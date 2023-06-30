@@ -41,6 +41,14 @@ class AdoptionOfferType extends AbstractType
                 'entry_options' => ['label' => false],
                 'label' => 'Message',
             ]);
+        } else {
+            $builder->add('messages', CollectionType::class, [
+                'entry_type' => MessageType::class,
+                'entry_options' => ['label' => false],
+                'label' => 'Message',
+                'data' => $options['firstMessage'],
+                'mapped' => false,
+            ]);
         }
     }
 
@@ -50,6 +58,7 @@ class AdoptionOfferType extends AbstractType
             'data_class' => AdoptionOffer::class,
             'idAnnonce' => null,
             'isCreation' => false,
+            'firstMessage' => null,
         ]);
         $resolver->setAllowedTypes('idAnnonce', 'int');
         $resolver->setAllowedTypes('isCreation', 'bool');
