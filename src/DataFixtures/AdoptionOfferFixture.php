@@ -31,7 +31,6 @@ class AdoptionOfferFixture extends Fixture implements DependentFixtureInterface
             $dogs = $annonce->getDogs();
 
             $nbrOfferMax = 3;
-            $nbrOfferMax = count($adoptants);
             if ($nbrOfferMax > count($adoptants)) {
                 $nbrOfferMax = count($adoptants);
             }
