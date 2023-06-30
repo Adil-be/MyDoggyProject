@@ -104,4 +104,9 @@ class Adoptant extends User
 
         return false;
     }
+
+    public function __toString(): string
+    {
+        return (string) $this->getEmail();
+    }
 }

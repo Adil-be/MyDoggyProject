@@ -4,7 +4,7 @@
             Annonce n°{{annonce.getId}}</h3>
         <h5 class="card-title">titre :
             {{annonce.getTitle}}</h5>
-        <a class="btn btn-primary position-relative" href="{{path('annonce_adoption_offers',{id:annonce.getId })}}">
+        <a class="btn btn-primary position-relative" href="{{path('app_annoneur_annonce_adoptionOffers',{id:annonce.getId })}}">
             Inbox
             {% if annonce.getNbrUnreadMessage != 0 %}
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
