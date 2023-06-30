@@ -8,6 +8,7 @@ use App\Entity\Annonce;
 use App\Entity\Message;
 use App\Form\AdoptionOfferType;
 use App\Repository\AdoptionOfferRepository;
+use App\Repository\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,19 +75,27 @@ class AdoptionOfferController extends AbstractController
 
     #[IsGranted('ROLE_ADOPTANT')]
     #[Route('/adoption/{id}/modify', name: 'app_adoption_modify')]
-    public function modifyAdoption(Request $request, AdoptionOfferRepository $adoptionOfferRepository, AdoptionOffer $adoptionOffer): Response
-    {
+    public function modifyAdoption(
+        Request $request,
+        AdoptionOfferRepository $adoptionOfferRepository,
+        AdoptionOffer $adoptionOffer,
+        MessageRepository $messageRepository
+    ): Response {
         /** @var Adoptant $user */
         $user = $this->getUser();
         if ($user != $adoptionOffer->getAdoptant()) {
             throw $this->createAccessDeniedException("You don't have access!");
         }
 
+        // we don't want all the messages to be in the form only the first one
+        $firstMessage = $messageRepository->findFirstMessageForm($adoptionOffer->getId());
+
         $form = $this->createForm(AdoptionOfferType::class, $adoptionOffer, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_adoption_modify', [
                 'id' => $adoptionOffer->getId(),
             ]),
+            'firstMessage' => $firstMessage,
             'idAnnonce' => $adoptionOffer->getAnnonce()->getId(),
             'isCreation' => false,
         ]);
