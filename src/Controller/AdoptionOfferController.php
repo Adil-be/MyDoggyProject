@@ -25,7 +25,7 @@ class AdoptionOfferController extends AbstractController
     }
 
     #[IsGranted('ROLE_ADOPTANT')]
-    #[Route('/adoption/{id}/new', name: 'app_adoption_apply')]
+    #[Route('/adoption/{id}/new', name: 'app_adoption_new')]
     public function applyForAdoption(Request $request, AdoptionOfferRepository $adoptionOfferRepository, Annonce $annonce): Response
     {
         /** @var Adoptant $user */
@@ -46,7 +46,7 @@ class AdoptionOfferController extends AbstractController
 
         $form = $this->createForm(AdoptionOfferType::class, $adoptionOffer, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_adoption_apply', [
+            'action' => $this->generateUrl('app_adoption_new', [
                 'id' => $adoptionOffer->getAnnonce()->getId(),
             ]),
             'idAnnonce' => $adoptionOffer->getAnnonce()->getId(),

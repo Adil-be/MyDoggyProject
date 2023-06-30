@@ -33,7 +33,12 @@
         </ul>
         {# link #}
         <div class="text-center">
-            <a class="btn btn-primary" href="{{path('annonce_detail',{'id' : adoptionOffer.getAnnonce.getId})}}" target="_blank" class="card-link">Details</a>
+
+            {% if is_granted('ROLE_ADOPTANT') %}
+                <a class="btn btn-primary" href="{{path('app_adoption_modify',{'id' : adoptionOffer.getId})}}" target="_blank" class="card-link">Modify</a>
+            {% endif %}
+
+
             <a class="btn btn-primary position-relative" href="{{path('annonce_adoption_offers',{id:adoptionOffer.getAnnonce.getId })}}">
                 Inbox
                 {% if adoptionOffer.getAnnonce.getNbrUnreadMessage != 0 %}
