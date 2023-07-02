@@ -4,15 +4,19 @@
             Annonce n°{{annonce.getId}}</h3>
         <h5 class="card-title">titre :
             {{annonce.getTitle}}</h5>
-        <a class="btn btn-primary position-relative" href="{{path('app_annoneur_annonce_adoptionOffers',{id:annonce.getId })}}">
-            Inbox
-            {% if annonce.getNbrUnreadMessage != 0 %}
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {{annonce.getNbrUnreadMessage}}+
-                    <span class="visually-hidden">unread messages</span>
-                </span>
-            {% endif %}
-        </a>
+        <div>
+            <a class="btn btn-primary" href="{{path('app_annoneur_annonce_adoptionOffers',{id:annonce.getId })}}">
+                see offers
+            </a>
+            <span class="badge text-bg-success position-relative">inbox
+                {% if annonce.nbrNewMessage != 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{annonce.nbrNewMessage}}+
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                {% endif %}
+            </span>
+        </div>
         <p class="card-text">
             <small class="text-body-secondary">last modified :
                 {{annonce.getModifiedAt|format_datetime()}}</small>

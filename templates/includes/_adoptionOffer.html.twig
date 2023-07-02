@@ -52,9 +52,14 @@
 
             <a class="btn btn-primary position-relative" href="{{path('app_annoneur_annonce_adoptionOffers',{id:adoptionOffer.getAnnonce.getId })}}">
                 Inbox
-                {% if adoptionOffer.getAnnonce.getNbrUnreadMessage != 0 %}
+                {% if is_granted('ROLE_ADOPTANT') and adoptionOffer.nbrNewMessageAnnonceur != 0 %}
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        {{adoptionOffer.getAnnonce.getNbrUnreadMessage}}+
+                        {{adoptionOffer.nbrNewMessageAnnonceur}}+
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                {% elseif is_granted('ROLE_ANNONCEUR') and adoptionOffer.nbrNewMessageAdoptant != 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{adoptionOffer.nbrNewMessageAdoptant}}+
                         <span class="visually-hidden">unread messages</span>
                     </span>
                 {% endif %}
