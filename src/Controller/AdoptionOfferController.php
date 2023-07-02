@@ -7,6 +7,7 @@ use App\Entity\AdoptionOffer;
 use App\Entity\Annonce;
 use App\Entity\Message;
 use App\Form\AdoptionOfferType;
+use App\Form\MessageType;
 use App\Repository\AdoptionOfferRepository;
 use App\Repository\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -114,5 +115,71 @@ class AdoptionOfferController extends AbstractController
             'controller_name' => 'AnnonceurController',
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/adoption/{id}/chat', name: 'app_adoption_chat')]
+    public function adoptionChat(
+        AdoptionOffer $adoptionOffer,
+        Request $request,
+        MessageRepository $messageRepository
+    ): Response {
+        if (
+            $this->getUser() != $adoptionOffer->getAdoptant()
+            && $this->getUser() != $adoptionOffer->getAnnonce()->getAnnonceur()
+        ) {
+            throw $this->createAccessDeniedException("You don't have access!");
+        }
+
+        $this->makeMessageViwed($adoptionOffer, $messageRepository);
+
+        $canMessage = true;
+        $form = null;
+        $isFirstMessage = (count($adoptionOffer->getMessages()) <= 1);
+
+        if ($isFirstMessage && ($this->getUser() instanceof Adoptant)) {
+            $canMessage = false;
+        }
+
+        if ($canMessage) {
+            $message = new Message();
+            $message->setAdoptionOffer($adoptionOffer);
+            $form = $this->createForm(MessageType::class, $message);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $message->setIsFromAdoptant($this->getUser() instanceof Adoptant);
+                $message->setCreatedAt(new \DateTimeImmutable());
+
+                $messageRepository->save($message, true);
+
+                $this->addFlash('success', 'Message sent !');
+
+                return $this->redirectToRoute('app_adoption_chat', ['id' => $adoptionOffer->getId()]);
+            }
+        }
+
+        return $this->render('adoption_offer/adoptionChat.html.twig', [
+            'canMessage' => $canMessage,
+            'adoptionOffer' => $adoptionOffer,
+            'form' => $form,
+        ]);
+    }
+
+    public function makeMessageViwed(
+        AdoptionOffer $adoptionOffer,
+        MessageRepository $messageRepository
+    ): void {
+        $isAdoptant = $this->getUser() instanceof Adoptant;
+        $messages = $adoptionOffer->getMessages()->filter(function ($m) use ($isAdoptant) {
+            // return (true);
+            return $m->isFromAdoptant() != $isAdoptant;
+        });
+        // dd($messages);
+
+        foreach ($messages as $message) {
+            $message->setViewed(true);
+            $messageRepository->save($message, true);
+        }
     }
 }

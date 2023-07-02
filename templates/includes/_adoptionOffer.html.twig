@@ -50,7 +50,7 @@
             {% endif %}
 
 
-            <a class="btn btn-primary position-relative" href="{{path('app_annoneur_annonce_adoptionOffers',{id:adoptionOffer.getAnnonce.getId })}}">
+            <a class="btn btn-primary position-relative" href="{{path('app_adoption_chat',{id:adoptionOffer.getId })}}">
                 Inbox
                 {% if is_granted('ROLE_ADOPTANT') and adoptionOffer.nbrNewMessageAnnonceur != 0 %}
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
