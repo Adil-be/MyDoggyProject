@@ -156,6 +156,24 @@ class AdoptionOffer
         return $this;
     }
 
+    public function nbrNewMessageAdoptant(): int
+    {
+        $newMessageFromAdoptant = $this->getMessages()->filter(function ($m) {
+            return $m->isFromAdoptant() && !$m->isViewed();
+        });
+
+        return count($newMessageFromAdoptant);
+    }
+
+    public function nbrNewMessageAnnonceur(): int
+    {
+        $newMessageFromAdoptant = $this->getMessages()->filter(function ($m) {
+            return !$m->isFromAdoptant() && !$m->isViewed();
+        });
+
+        return count($newMessageFromAdoptant);
+    }
+
     public function __toString()
     {
         return 'adoptionOffer';
