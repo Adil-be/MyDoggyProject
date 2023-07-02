@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Liste des demande d'adoption pour l'annonce n°{{annonce.getId}}</h1>
+
+    <section>
+        {% for adoptionOffer in annonce.getAdoptionOffers %}
+            {% include "includes/_adoptionOffer.html.twig" with {'adoptionOffer':adoptionOffer} only %}
+        {% endfor %}
+    </section>
+{% endblock body %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Annonce;
 use App\Entity\Annonceur;
 use App\Entity\Dog;
+use App\Repository\AnnonceRepository;
 use App\Repository\DogRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,10 +53,10 @@ class AnnonceurController extends AbstractController
         }
     }
 
-    #[Route('/annonce/{id}/adoptionOffer', name: 'annonce_adoption_offers')]
+    #[Route('/annonce/{id}/adoptionOffer', name: 'app_annoneur_annonce_adoptionOffers')]
     public function annonceAdoptionOffers(Annonce $annonce): Response
     {
-        return $this->render('defaut/index.html.twig', [
+        return $this->render('annonceur/annonceListAdoptionOffer.html.twig', [
             'controller_name' => 'AnnonceurController',
             'annonce' => $annonce,
         ]);
