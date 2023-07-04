@@ -2,36 +2,59 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Put;
 use App\Repository\AnnonceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['read:Annonce:Item']]
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['read:Annonce:Collection']],
+        ),
+        new Put(
+            normalizationContext: ['Groups' => ['write:Annonce:Collection']]
+        ),
+    ]
+)]
 class Annonce
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item', 'write:Annonce:Collection'])]
     private ?string $title = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item'])]
     private ?\DateTimeInterface $modifiedAt = null;
 
     #[ORM\Column]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item', 'write:Annonce:Collection'])]
     private ?bool $isAvailable = true;
 
     /**
      * @var Collection<int, Dog>
      */
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Dog::class, cascade: ['persist', 'remove'])]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item'])]
     private Collection $dogs;
 
     /**
@@ -41,6 +64,7 @@ class Annonce
     private Collection $adoptionOffers;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item'])]
     private ?Annonceur $annonceur = null;
 
     public function __construct()

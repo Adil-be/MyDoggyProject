@@ -2,23 +2,41 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Put;
 use App\Repository\DogRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DogRepository::class)]
+#[ApiResource(operations: [
+        new Get(
+            normalizationContext: ['groups' => ['read:Dog:Item']]
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['read:Dog:Collection']]
+        ),
+        new Put(
+            normalizationContext: ['groups' => ['write:Dog:Item']]
+        ),
+    ])]
 class Dog
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read:Dog:Collection', 'read:Dog:Item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item', 'read:Dog:Collection', 'read:Dog:Item', 'write:Dog:Item'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -28,6 +46,7 @@ class Dog
         minMessage: 'the description must be at least {{ limit }} characters long',
         maxMessage: 'the description cannot be longer than {{ limit }} characters',
     )]
+    #[Groups(['read:Dog:Item', 'write:Dog:Item'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -37,12 +56,15 @@ class Dog
         minMessage: 'the description must be at least {{ limit }} characters long',
         maxMessage: 'the description cannot be longer than {{ limit }} characters',
     )]
+    #[Groups(['read:Dog:Item', 'read:Annonce:Item', 'read:Dog:Collection', 'write:Dog:Item'])]
     private ?string $antecedant = null;
 
     #[ORM\Column]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item', 'read:Dog:Item', 'read:Dog:Collection', 'write:Dog:Item'])]
     private ?bool $isAdopted = false;
 
     #[ORM\Column]
+    #[Groups(['read:Dog:Item', 'read:Annonce:Item', 'read:Dog:Item', 'read:Dog:Collection', 'write:Dog:Item'])]
     private ?bool $acceptAnimmals = null;
 
     /**
@@ -55,19 +77,23 @@ class Dog
      * @var Collection<int, Breed>
      */
     #[ORM\ManyToMany(targetEntity: Breed::class, mappedBy: 'dogs', cascade: ['persist'])]
+    #[Groups(['read:Dog:Item', 'read:Dog:Collection'])]
     private Collection $breeds;
 
     #[ORM\ManyToOne(inversedBy: 'dogs')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read:Dog:Item', 'read:Dog:Collection'])]
     private ?Annonce $annonce = null;
 
     /**
      * @var Collection<int, AdoptionOffer>
      */
     #[ORM\ManyToMany(targetEntity: AdoptionOffer::class, mappedBy: 'dogs')]
+    #[Groups(['read:Dog:Item', 'read:Dog:Collection'])]
     private Collection $adoptionOffers;
 
     #[ORM\Column]
+    #[Groups(['read:Dog:Item', 'read:Dog:Collection', 'read:Annonce:Item'])]
     private ?bool $isLof = null;
 
     public function __construct()
