@@ -2,21 +2,41 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Put;
 use App\Repository\AnnonceurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AnnonceurRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => ['read:Annonce:Item']]
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['read:Annonce:Collection']]
+        ),
+        new Put(
+            normalizationContext: ['groups' => ['write:Annonce:Item']]
+        ),
+    ]
+)]
 class Annonceur extends User
 {
     #[ORM\Column(length: 255)]
+    #[Groups(['read:Annonce:Collection', 'read:Annonce:Item', 'write:Annonce:Item'])]
     private ?string $name = null;
 
     /**
      * @var Collection<int, Annonce>
      */
     #[ORM\OneToMany(mappedBy: 'annonceur', targetEntity: Annonce::class, cascade: ['persist'])]
+    #[Groups(['read:Annonce:Item'])]
     private Collection $annonces;
 
     public function __construct()
